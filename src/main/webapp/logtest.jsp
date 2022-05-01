@@ -14,16 +14,17 @@
 	Connection con = db.getConnection();
 	try {
 		String un = request.getParameter("username");
-		String pass = request.getParameter("password");
+		String email = request.getParameter("email");
 		
-		if(un.length() == 0 || pass.length() == 0){
-			session.setAttribute("invalidinput","Enter a valid value for username and password");
+		if(un.length() == 0 || email.length() == 0){
+			session.setAttribute("invalidinput","Error: fields are empty");
 			response.sendRedirect("index.jsp");
+			return;
 		}
 		
 		Statement st = con.createStatement();
 
-		String str = "select * from users where username='" + un + "' and password='" + pass + "'";
+		String str = "select * from users where username='" + un + "' and email='" + email + "'";
 		ResultSet rs = st.executeQuery(str); //remember to change this
 		
 		int count = 0;
@@ -35,7 +36,7 @@
 			//out.println("ROW = " + a1 + " " + a2);
 		}
 		if(count == 0){
-			session.setAttribute("invalidinput","Unsuccessful Login.  Username/password did not work.  Please try again");
+			session.setAttribute("invalidinput","Unsuccessful Login.  Username/email did not work.  Please try again");
 			response.sendRedirect("index.jsp");
 		}
 		else {
