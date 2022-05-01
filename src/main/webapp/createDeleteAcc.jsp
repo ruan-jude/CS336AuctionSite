@@ -24,5 +24,9 @@
 			session.setAttribute("invalidinput","");}
 	%>
 </form>
+<br>
+<form method = "get" action = "index.jsp">
+	<input type="submit" value="Back">
+</form>
 </body>
 </html>
