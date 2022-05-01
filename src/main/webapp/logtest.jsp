@@ -27,21 +27,12 @@
 		String str = "select * from users where username='" + un + "' and email='" + email + "'";
 		ResultSet rs = st.executeQuery(str); //remember to change this
 		
-		int count = 0;
-		while (rs.next()) {
-			count++;
-			// retrieve and print the values for the current row
-			//String a1 = rs.getString("username");
-			//String a2 = rs.getString("password");
-			//out.println("ROW = " + a1 + " " + a2);
-		}
-		if(count == 0){
-			session.setAttribute("invalidinput","Unsuccessful Login.  Username/email did not work.  Please try again");
-			response.sendRedirect("index.jsp");
-		}
-		else {
+		if (rs.next()) {
 			session.setAttribute("user", un);
 			response.sendRedirect("logged_in.jsp");
+		} else {
+			session.setAttribute("invalidinput","Unsuccessful Login.  Username/email did not work.  Please try again");
+			response.sendRedirect("index.jsp");
 		}
 		
 		db.closeConnection(con);
