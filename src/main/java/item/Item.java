@@ -1,27 +1,19 @@
-package auction;
+package item;
 
 public abstract class Item {
 
 	private int itemID;
 	
-	private enum Type { Shoes, Pants, Shirt, Jacket };
-	private Type type;
-	
 	private String name;
 	private String color;
 	
-	private enum Season { Spring, Summer, Fall, Winter };
+	public enum Season { Spring, Summer, Fall, Winter };
 	private Season season;
 	
-	public Item(Type type, String name, String color, Season season) {
-		this.type = type;
+	public Item(String name, String color, Season season) {
 		this.name = name;
 		this.color = color;
 		this.season = season;
-	}
-	
-	public Type getType() {
-		return type;
 	}
 	
 	public String getName() {
