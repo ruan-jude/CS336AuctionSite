@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Create an Auction</h1>
-<form method="get" action = createdAuction.jsp>
+<form method="post" action = createdAuction.jsp>
 	<label for="clothing">Choose a clothing type*:</label>
 	<select name="clothing" id="clothing">
     	<option value="shirt">Shirt</option>
@@ -36,6 +36,10 @@
 			out.println(session.getAttribute("invalidinput"));
 			session.setAttribute("invalidinput","");}
 	%>
+</form>
+<br>
+<form method = "get" action = "logged_in.jsp">
+	<input type="submit" value="Back">
 </form>
 
 </body>
