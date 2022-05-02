@@ -15,9 +15,29 @@
 	<select name="clothing" id="clothing">
     	<option value="shirt">Shirt</option>
     	<option value="pants">Pants</option>
- 	   <option value="shoes">Shoes</option>
-  	  <option value="jacket">Jacket</option>
+ 	   	<option value="shoes">Shoes</option>
+  	  	<option value="jacket">Jacket</option>
  	 </select>
+ 	<table>
+ 		<tr>
+ 			<td>Name*</td><td><input type="text" name="name"></td>
+ 		</tr>
+ 		<tr>    
+			<td>Size*</td><td><input type="text" name="size"></td>
+		</tr>
+		<tr>
+			<td>Color</td><td><input type="text" name="color"></td>
+		</tr>
+ 	</table>
+ 	<label for="season">Season:</label>
+	<select name="season" id="season">
+	 	<option value="-">-</option>
+    	<option value="spring">spring</option>
+    	<option value="summer">summer</option>
+ 	   	<option value="fall">fall</option>
+  	  	<option value="winter">winter</option>
+ 	 </select>
+ 	<br>
  	<br>
 	<table>
 		<tr>

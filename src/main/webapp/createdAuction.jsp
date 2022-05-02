@@ -14,6 +14,12 @@
 	Connection con = db.getConnection();
 	try {
 		String clothingType = request.getParameter("clothing");
+		String name = request.getParameter("name");
+		String size = request.getParameter("size");
+		String color = request.getParameter("color");
+		String season = request.getParameter("season");
+		
+		
 		String incrementstr = request.getParameter("increment");
 		String minPricestr = request.getParameter("minPrice");
 		String dateClosestr = request.getParameter("closingDate");
@@ -27,9 +33,10 @@
 		String current = sdf.format(dt);
 		
 		
-		if(clothingType.length() == 0 || incrementstr.length() == 0 || dateClosestr.length() == 0){
+		if (clothingType.length() == 0 || incrementstr.length() == 0 || dateClosestr.length() == 0 || 
+				name.length() == 0 || size.length() == 0){
 			session.setAttribute("invalidinput","Error: required(*) field(s) are empty.");
-			response.sendRedirect("createDeleteAcc.jsp");
+			response.sendRedirect("createAuction.jsp");
 			return;
 		}
 		if (minPricestr.length() != 0) {
@@ -37,28 +44,54 @@
 		}
 		increment = Float.parseFloat(incrementstr);
 		
-		//Create auctionID for this new auction:
-		long id;
-		Statement st1;
+		//Create itemID:
+		long itemid;
+		Statement st;
 		String findid;
 		do {
-			id = new Random().nextLong();
+			itemid = new Random().nextLong();
+			st = con.createStatement();
+			findid = "SELECT EXISTS(SELECT 1 FROM items WHERE itemID = '" + itemid + "')";
+		} while (!st.execute(findid));
+		
+		//Insert new item into items table:
+		String insert = "INSERT INTO items(itemID, clothingType, size, name, color, season)" 
+				+ "VALUES (?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps1 = con.prepareStatement(insert);
+		ps1.setLong(1, itemid);
+		ps1.setString(2, clothingType);
+		ps1.setString(3, size);
+		ps1.setString(4, name);
+		if (color.length() != 0) ps1.setString(5, color);
+		else ps1.setString(5, null);
+		if (!season.equals("-")) ps1.setString(6, season);
+		else ps1.setString(6, null);
+		//Run the query
+		ps1.executeUpdate();
+
+		
+		//Create auctionID for this new auction:
+		long aucid;
+		Statement st1;
+		do {
+			aucid = new Random().nextLong();
 			st1 = con.createStatement();
-			findid = "SELECT 1 FROM auctions WHERE auctionID = '" + id + "'";
+			findid = "SELECT EXISTS(SELECT 1 FROM auctions WHERE auctionID = '" + aucid + "')";
 		} while (!st1.execute(findid));
+
 		
 		
-		Statement st = con.createStatement();
-		String insert = "INSERT INTO auctions(auctionID, clothingType, dateOpen, dateClose, minPrice, increment, owner)" 
+		insert = "INSERT INTO auctions(auctionID, dateOpen, dateClose, minPrice, increment, owner, itemID)" 
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(insert);
-		ps.setLong(1, id);
-		ps.setString(2, clothingType);
-		ps.setString(3, current);
-		ps.setString(4, dateClosestr);
-		if (minPrice != -1) ps.setFloat(5, minPrice);
-		ps.setFloat(6, increment);
-		ps.setString(7, session.getAttribute("email").toString());
+		ps.setLong(1, aucid);
+		ps.setString(2, current);
+		ps.setString(3, dateClosestr);
+		if (minPrice != -1) ps.setFloat(4, minPrice);
+		else ps.setString(4, null);
+		ps.setFloat(5, increment);
+		ps.setString(6, session.getAttribute("email").toString());
+		ps.setLong(7,itemid);
 		//Run the query against the DB
 		ps.executeUpdate();
 		
