@@ -10,6 +10,7 @@ public class ApplicationDB {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public Connection getConnection(){
 		
 		//Create a connection string
@@ -31,7 +32,7 @@ public class ApplicationDB {
 		}
 		try {
 			//Create a connection to your DB
-			connection = DriverManager.getConnection(connectionUrl,"root", "password here");
+			connection = DriverManager.getConnection(connectionUrl,"root", "Thebluesnake22");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

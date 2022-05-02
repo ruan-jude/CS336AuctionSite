@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Testing Login</title>
 </head>
 <body>
 	<%
@@ -28,13 +28,15 @@
 		ResultSet rs = st.executeQuery(str); //remember to change this
 		
 		if (rs.next()) {
-			session.setAttribute("user", un);
+			session.setAttribute("user", rs.getString("username"));
+			session.setAttribute("email", rs.getString("email"));
 			response.sendRedirect("logged_in.jsp");
 		} else {
-			session.setAttribute("invalidinput","Unsuccessful Login.  Username/email did not work.  Please try again");
+			session.setAttribute("invalidinput","Unsuccessful Login. Username/email did not work. Please try again");
 			response.sendRedirect("index.jsp");
 		}
 		
+		rs.close();
 		db.closeConnection(con);
 	} catch (Exception e) {
 		e.printStackTrace();
