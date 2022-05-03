@@ -30,7 +30,11 @@
 		if (rs.next()) {
 			session.setAttribute("user", rs.getString("username"));
 			session.setAttribute("email", rs.getString("email"));
-			response.sendRedirect("logged_in.jsp");
+			if (rs.getBoolean("isAdmin") || rs.getBoolean("isRep")) {
+				response.sendRedirect("logged_in_staff");
+			} else {
+				response.sendRedirect("logged_in.jsp");
+			}
 		} else {
 			session.setAttribute("invalidinput","Unsuccessful Login. Username/email did not work. Please try again");
 			response.sendRedirect("index.jsp");
