@@ -16,5 +16,8 @@
 	<form method = "get" action = createAuction.jsp>
 		<input type="submit" value="Create Auction">
 	</form>
+	<form method = "get" action = viewAuction.jsp>
+		<input type="submit" value="View Items for Auction">
+	</form>
 </body>
 </html>
