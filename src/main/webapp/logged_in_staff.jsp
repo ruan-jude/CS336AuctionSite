@@ -7,6 +7,10 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<h1>Staff</h1>
+	<%	
+    	out.println("Login Successful. Welcome " + session.getAttribute("user"));
+	%>
+	<a href = "log_out.jsp"> LOGOUT </a>
 </body>
 </html>
