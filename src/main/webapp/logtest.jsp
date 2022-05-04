@@ -32,7 +32,7 @@
 			session.setAttribute("email", rs.getString("email"));
 			if (rs.getBoolean("isAdmin")) {
 				response.sendRedirect("logged_in_admin.jsp");
-			} else if (rs.getBoolean("isRep") {
+			} else if (rs.getBoolean("isRep")) {
 				response.sendRedirect("logged_in_rep.jsp");
 			} else {
 				response.sendRedirect("logged_in.jsp");
