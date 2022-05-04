@@ -7,9 +7,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+
+	<style>
+		table td {
+		  border: 1px solid black;
+		}
+	</style>
+
 </head>
 <body>
-	<h1>Item Auctions</h1>
+	<h1>List of Auctions</h1>
 	<% try {
 	
 			//Get the database connection
@@ -29,38 +36,44 @@
 		<!--  Make an HTML table to show the results in: -->
 	<table>
 		<tr>    
-			<td>Item ID</td>
-			<td>Name</td>
-			<td>CLOTHING TYPE</td>
-			<td>size</td>
-			<td>color</td>
-			<td>OPEN DATE</td>
-			<td>CLOSE DATE</td>
-			<td>Minimum Price</td>
-			<td>increment</td>
-			<td>BIDDING</td>
+			<td>Seller</td>
+			<td>Name</td>	
+			<td>Clothing Type</td>
+			<td>Size</td>
+			<td>Color</td>
+			<td>Date Opened</td>
+			<td>Date Closed</td>
+			<td>Increment</td>
+			<td>Current Max Bid</td>
 		</tr>
 			<%
 			//parse out the results
-			while (result.next()) { %>
+			while (result.next()) { 
+				Statement stmt2 = con.createStatement();
+				String email = result.getString("owner");
+				ResultSet rs = stmt2.executeQuery("SELECT * FROM users WHERE email = '" + email +"'");
+				rs.next();
+			%>
 				<tr>   
-					<td><%= result.getString("itemID") %></td>
+					<td><%= rs.getString("username") %></td>
+					<% rs.close(); %>
 					<td><%= result.getString("name") %></td>
 					<td><%= result.getString("clothingType") %></td>
 					<td><%= result.getString("size") %></td>
 					<td><%= result.getString("color") %></td>
 					<td><%= result.getString("dateOpen") %></td>
 					<td><%= result.getString("dateClose") %></td>
-					<td><%= result.getString("minPrice") %></td>
 					<td><%= result.getString("increment") %></td>
 					<td><%= result.getString("bidding") %></td>
 				</tr>
 
-			<% } %>
-			
-
-			<form method="get" action = specificquery.jsp>
-			<td><br><br>Set Bid on Item</td>
+			<% } 
+			result.close();%>
+		</table>
+		
+		<br><br>
+		<form method="get" action = specificquery.jsp>
+			<label for="setBid">Set Bid on Item:</label>
 			<table>
 				<tr>    
 				<td>Enter ItemID: </td><td><input type="text" name="ItemID"></td>
@@ -70,13 +83,12 @@
 				</tr>
 			</table>
 			<input type="submit" name="command" value="Submit">
-			</form>
+		</form>
 				
 			<%
 			//close the connection.
 			db.closeConnection(con);
 			%>
-		</table>
 
 			
 		<%} catch (Exception e) {

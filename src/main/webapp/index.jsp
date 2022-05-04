@@ -31,7 +31,7 @@
 <br>
 <div id="Create/Delete Account">
 <form method = "get" action = createDeleteAcc.jsp>
-	<input type = "submit" name = "command" value = "Create/Delete An Account">
+	<input type = "submit" name = "createDelete" value = "Create/Delete An Account">
 </form>
 </div>
 </body>

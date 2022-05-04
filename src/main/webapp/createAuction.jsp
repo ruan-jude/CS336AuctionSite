@@ -13,10 +13,10 @@
 <form method="post" action = createdAuction.jsp>
 	<label for="clothing">Choose a clothing type*:</label>
 	<select name="clothing" id="clothing">
-    	<option value="shirt">Shirt</option>
-    	<option value="pants">Pants</option>
- 	   	<option value="shoes">Shoes</option>
-  	  	<option value="jacket">Jacket</option>
+    	<option value="Shirt">Shirt</option>
+    	<option value="Pants">Pants</option>
+ 	   	<option value="Shoes">Shoes</option>
+  	  	<option value="Jacket">Jacket</option>
  	 </select>
  	<table>
  		<tr>

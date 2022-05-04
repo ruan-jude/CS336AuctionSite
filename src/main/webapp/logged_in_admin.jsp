@@ -4,21 +4,17 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Login Screen</title>
+<title>Staff Login</title>
 </head>
 <body>
-	<h1>Online Auction Site</h1>
+	<h1>Staff</h1>
 	<%	
     	out.println("Login Successful. Welcome " + session.getAttribute("user"));
 	%>
 	<a href = "log_out.jsp"> LOGOUT </a>
 	<br> <br>
-	<form method = "get" action = createAuction.jsp>
-		<input type="submit" value="Create Auction">
-	</form>
-	<br>
-	<form method = "get" action = viewAuction.jsp>
-		<input type="submit" value="View Items for Auction">
+	<form method = "get" action = createRep.jsp>
+		<input type="submit" value="Create Customer Rep Account">
 	</form>
 </body>
 </html>

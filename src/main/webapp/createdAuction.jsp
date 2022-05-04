@@ -82,7 +82,7 @@
 		
 		
 		insert = "INSERT INTO auctions(auctionID, dateOpen, dateClose, minPrice, increment, owner, itemID)" 
-					+ "VALUES (?, ?, ?, ?, ?, ?, ?,?)";
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(insert);
 		ps.setLong(1, aucid);
 		ps.setString(2, current);
