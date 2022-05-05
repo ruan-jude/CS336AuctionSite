@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*, java.util.Date"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<!DOCTYPE html>
+<!DOCTYPE html SYSTEM "about:legacy-compat">
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -16,7 +16,8 @@
 
 </head>
 <body>
-	<h1>List of Auctions</h1>
+	<h2>List of Auctions</h2>
+	<h5>Click an Item Name to See More!</h5>
 	<% try {
 	
 			//Get the database connection
@@ -28,9 +29,11 @@
 			//Get the selected radio button from the index.jsp
 			String entity = request.getParameter("command");
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID";
+			String str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID ORDER BY dateOpen DESC";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
+			
+			session.setAttribute("aucID", "");
 		%>
 			
 		<!--  Make an HTML table to show the results in: -->
@@ -41,10 +44,8 @@
 			<td>Clothing Type</td>
 			<td>Size</td>
 			<td>Color</td>
-			<td>Date Opened</td>
-			<td>Date Closed</td>
-			<td>Increment</td>
-			<td>Current Max Bid</td>
+			<td>Closing Date</td>
+			<td>Current Highest Bid</td>
 		</tr>
 			<%
 			//parse out the results
@@ -57,33 +58,24 @@
 				<tr>   
 					<td><%= rs.getString("username") %></td>
 					<% rs.close(); %>
-					<td><%= result.getString("name") %></td>
+					<td><a href="viewDetailedAuction.jsp?aucid=<%= result.getString("auctionID") %>"><%= result.getString("name") %></a> </td>
 					<td><%= result.getString("clothingType") %></td>
 					<td><%= result.getString("size") %></td>
 					<td><%= result.getString("color") %></td>
-					<td><%= result.getString("dateOpen") %></td>
 					<td><%= result.getString("dateClose") %></td>
-					<td><%= result.getString("increment") %></td>
-					<td><%= result.getString("bidding") %></td>
+					<% String max = result.getString("bidding");
+						if (max == null) {
+							max = "N/A";
+						}
+					%>
+					<td><%= max %></td>
 				</tr>
+				
 
 			<% } 
 			result.close();%>
 		</table>
 		
-		<br><br>
-		<form method="get" action = specificquery.jsp>
-			<label for="setBid">Set Bid on Item:</label>
-			<table>
-				<tr>    
-				<td>Enter ItemID: </td><td><input type="text" name="ItemID"></td>
-				</tr>
-				<tr>
-				<td>Bid Amount: </td><td><input type="text" name="Bid"></td>
-				</tr>
-			</table>
-			<input type="submit" name="command" value="Submit">
-		</form>
 				
 			<%
 			//close the connection.
@@ -94,5 +86,10 @@
 		<%} catch (Exception e) {
 			out.print(e);
 		}%>
+		
+		<br>
+		<form method = "get" action = "logged_in.jsp">
+			<input type="submit" value="Back">
+		</form>
 </body>
 </html>

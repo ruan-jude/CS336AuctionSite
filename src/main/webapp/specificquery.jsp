@@ -22,7 +22,7 @@
 		String str = "UPDATE auctions SET bidding = " + bid + " WHERE itemID = " + itemID;
 		out.println(str);
 						
-		st.executeUpdate(str); //remember to change this
+		st.executeUpdate(str); 
 
 	
 		db.closeConnection(con);

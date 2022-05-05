@@ -51,7 +51,7 @@
 	}
 
 %>
-<form method = "get" action = "createDeleteAcc.jsp">
+<form method = "get" action = "index.jsp">
 	<input type="submit" value="Back">
 </form>
 </body>
