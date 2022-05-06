@@ -1,6 +1,7 @@
 package com.cs336.pkg;
 
 import java.sql.Connection;
+
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -32,7 +33,7 @@ public class ApplicationDB {
 		}
 		try {
 			//Create a connection to your DB
-			connection = DriverManager.getConnection(connectionUrl,"root", "Thebluesnake22");
+			connection = DriverManager.getConnection(connectionUrl,"root", "spidey2001");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

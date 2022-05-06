@@ -66,9 +66,46 @@
 			//Get the selected radio button from the index.jsp
 			String entity = request.getParameter("command");
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
-			String str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID ORDER BY dateOpen DESC";
+			String str = "";
+			
+			out.println("DSFSF");
+			
+			
+			if(request.getParameter("month") != null){
+				out.println("IM FUCKING GAY");
+				String month = request.getParameter("month");
+				str = "SELECT * FROM items i, auctions a WHERE i.itemID = a.itemID AND " +
+					  "(monthname(dateOpen) = '" + month + "' or monthname(dateClose) = '" + month + "')";
+				
+			}
+			
+			
+			else if(request.getParameter("queryname") != null){
+				String x = request.getParameter("queryname");
+				String str2 = "SELECT email from users WHERE username = '" + x + "'";
+				
+				Statement stmtX = con.createStatement();
+				ResultSet r = stmtX.executeQuery(str2);
+				r.next();
+				String gmail = r.getString("email");
+				
+				str = "SELECT * FROM items i,auctions a, bids b " + 
+						"WHERE i.itemID = a.itemID AND " + 
+						"a.auctionID = b.auctionID AND (owner = '" + gmail + "' OR bidder = '" + gmail + "')";
+			}
+			else if(request.getParameter("specific") != null){
+				String x = request.getParameter("specific");
+				str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID ORDER BY " + x + " ASC";
+			}
+			else{
+			str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID ORDER BY dateOpen DESC";
+			}
 			//Run the query against the database.
+			
+			out.println(str);
+			
 			ResultSet result = stmt.executeQuery(str);
+			
 			
 			session.setAttribute("aucID", "");
 		%>
@@ -88,6 +125,8 @@
 			while (result.next()) { 
 				Statement stmt2 = con.createStatement();
 				String email = result.getString("owner");
+				
+				
 				ResultSet rs = stmt2.executeQuery("SELECT * FROM users WHERE email = '" + email +"'");
 				rs.next();
 			%>
@@ -110,6 +149,49 @@
 			<% } 
 			result.close();%>
 		</table>
+		
+	<br><br>
+	SORT BY:
+	<br>
+		<form method="get" action="viewAuction.jsp">
+			<select name="specific" size=1>
+				<option value="bidding">Bidding Price (Low to High)</option>
+				<option value="clothingType">Clothing Type</option>
+				<option value="dateClose">Closing Date</option>			
+				<option value="name">Name</option>
+				<option value="owner">Seller</option>
+				<option value="size">Size</option>
+			</select>&nbsp;<br> <input type="submit" value="submit">
+		</form>
+	<br>
+	
+	<br><br>
+	List of all auctions a specific buyer or seller participated in
+	<br>
+		<form method="get" action="viewAuction.jsp">
+			<table>
+				<tr>    
+					<td>Name</td><td><input type="text" name="queryname"></td>
+				</tr>
+			</table>
+			<input type="submit" value="SUBMIT">
+		</form>
+	<br>
+	
+	<br><br>
+	View List of Similar Items on Auctions in Month
+	<br>
+		<form method="get" action="viewAuction.jsp">
+			<table>
+				<tr>    
+					<td>Month</td><td><input type="text" name="month"></td>
+				</tr>
+			</table>
+			<input type="submit" value="SUBMIT">
+		</form>
+	<br>
+	
+		
 		
 				
 			<%
