@@ -4,6 +4,28 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html SYSTEM "about:legacy-compat">
 <html>
+<style>
+.alert {
+  padding: 20px;
+  background-color: #f44336;
+  color: white;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+</style>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
@@ -22,8 +44,23 @@
 	
 			//Get the database connection
 			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();		
-
+			Connection con = db.getConnection();
+			
+			//Check if we need any alerts:
+			Statement autoBidMaxed = con.createStatement();
+			ResultSet checkAutoBids = autoBidMaxed.executeQuery("SELECT * FROM auctions a, items i, bids b WHERE i.itemID = a.itemID AND b.auctionID = a.auctionID AND b.reachedMax = 1 AND b.didAlert = 0 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
+			while (checkAutoBids.next()) {
+	%>
+				<div class="alert">
+				  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+				  Someone has placed a bid that puts your autobid over your upper limit for the item, <strong><%=checkAutoBids.getString("name")%></strong>. 
+				</div>
+			
+	<% 	
+				Statement st = con.createStatement();
+				st.executeUpdate("UPDATE bids SET bids.didAlert = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
+			}
+			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the selected radio button from the index.jsp
@@ -43,7 +80,6 @@
 			<td>Name</td>	
 			<td>Clothing Type</td>
 			<td>Size</td>
-			<td>Color</td>
 			<td>Closing Date</td>
 			<td>Current Highest Bid</td>
 		</tr>
@@ -61,7 +97,6 @@
 					<td><a href="viewDetailedAuction.jsp?aucid=<%= result.getString("auctionID") %>"><%= result.getString("name") %></a> </td>
 					<td><%= result.getString("clothingType") %></td>
 					<td><%= result.getString("size") %></td>
-					<td><%= result.getString("color") %></td>
 					<td><%= result.getString("dateClose") %></td>
 					<% String max = result.getString("bidding");
 						if (max == null) {

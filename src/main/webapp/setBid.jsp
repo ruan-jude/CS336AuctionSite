@@ -27,8 +27,19 @@
 		Statement st1 = con.createStatement();
 		ResultSet rs1 = st1.executeQuery("SELECT * FROM auctions WHERE auctionID ='" + currAuc +"'");
 		rs1.next();
+		String winner = rs1.getString("winner");
+		if (winner != null) {
+			session.setAttribute("invalidinput", "Auction Is Closed, Sorry!");
+			response.sendRedirect("viewDetailedAuction.jsp");
+			return;
+		}
 		float currLargest = rs1.getFloat("bidding");
 		String aucOwner = rs1.getString("owner");
+		
+		//Get item name for current auction
+		ResultSet item = st1.executeQuery("SELECT * FROM items WHERE itemID = '" + rs1.getLong("itemID") + "'");
+		item.next();
+		String itemName = item.getString("name");
 		if (aucOwner.equals(session.getAttribute("email").toString())) {
 			session.setAttribute("invalidinput", "Error: CANNOT BID ON YOUR OWN ACTION!");
 			response.sendRedirect("viewDetailedAuction.jsp");
@@ -106,6 +117,97 @@
 		
 		out.print("Successfully placed bid!");
 		
+		
+		
+		/*
+			FOR AUTO BIDDING:
+		*/
+		
+		//Create temp table
+		Statement st3 = con.createStatement();
+		st3.executeUpdate("CREATE TEMPORARY TABLE autoIncrement AS SELECT * FROM bids WHERE autoIncrement = 1 AND reachedMax = 0 AND auctionID = '" + currAuc +"'");
+		
+		Statement st5 = con.createStatement();
+		ResultSet rs5 = st5.executeQuery("SELECT count(*) AS count FROM autoIncrement");
+		rs5.next();
+		int count = rs5.getInt("count");
+		Statement st4 = con.createStatement();
+		ResultSet rs4 = null;
+		
+		boolean escape = false;
+		long currHighestBidID = bidid;
+		
+		while (count > 0) {
+			rs4 = st4.executeQuery("SELECT * FROM autoIncrement ORDER BY amount DESC");
+			if (count >= 2) {
+				rs4.next();
+			}
+			while (rs4.next()) {
+				if (count == 1 && currHighestBidID == rs4.getLong("bidID")) {
+					escape = true;
+					break;
+				}
+				float newAmt = rs4.getFloat("incrementAmount") + bid;
+				if (newAmt <= rs4.getFloat("maxBid")) {
+					//Insert auto-created bid into item table
+					String addBid = "INSERT INTO bids(bidID, auctionID, amount, bidder, autoIncrement, incrementAmount, maxBid, reachedMax)" 
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+					PreparedStatement ps2 = con.prepareStatement(addBid);
+					
+					//Create new bidID:
+					long bidid0;
+					Statement st0;
+					String findid0;
+					do {
+						bidid0 = new Random().nextLong();
+						st0 = con.createStatement();
+						findid0 = "SELECT EXISTS(SELECT 1 FROM bids WHERE bidID = '" + bidid0 + "')";
+					} while (!st.execute(findid0));
+				
+					ps2.setLong(1, bidid0);
+					ps2.setLong(2, currAuc);
+					ps2.setFloat(3, newAmt);
+					ps2.setString(4, rs4.getString("bidder"));
+					ps2.setBoolean(5, true);
+					ps2.setFloat(6, rs4.getFloat("incrementAmount"));
+					ps2.setFloat(7, rs4.getFloat("maxBid"));
+					ps2.setBoolean(8, false);
+					ps2.executeUpdate();
+					
+					//Update auction with new highest bid:
+					Statement st8 = con.createStatement();
+					st8.executeUpdate("UPDATE auctions SET bidding = '" + newAmt + "' WHERE auctionID = '" + currAuc +"'");
+					
+					//Update autoIncrement table:
+					Statement st6 = con.createStatement();
+					st6.executeUpdate("DELETE FROM autoIncrement WHERE bidID = '"+  rs4.getLong("bidID") +"'");
+					String update = "INSERT INTO autoIncrement(bidID, auctionID, amount, bidder, autoIncrement, incrementAmount, maxBid, reachedMax)" 
+							+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+					PreparedStatement ps3 = con.prepareStatement(update);
+					ps3.setLong(1, bidid0);
+					ps3.setLong(2, currAuc);
+					ps3.setFloat(3, newAmt);
+					ps3.setString(4, rs4.getString("bidder"));
+					ps3.setBoolean(5, true);
+					ps3.setFloat(6, rs4.getFloat("incrementAmount"));
+					ps3.setFloat(7, rs4.getFloat("maxBid"));
+					ps3.setBoolean(8, false);
+					ps3.executeUpdate();
+					
+					currHighestBidID = bidid0;
+					bid = newAmt;
+				} else {
+					Statement st9 = con.createStatement();
+					st9.executeUpdate("UPDATE bids SET reachedMax = '" + 1 + "' WHERE bidID = '"+ rs4.getLong("bidID") +"'");
+					Statement st10 = con.createStatement();
+					st10.executeUpdate("DELETE FROM autoIncrement WHERE bidID = '"+ rs4.getLong("bidID") +"'");
+					count--;
+				}
+			}
+			if (escape) {
+				break;
+			}
+		}
 		
 	} catch (Exception e) {
 		out.print(e);

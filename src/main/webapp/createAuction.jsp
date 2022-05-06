@@ -32,10 +32,10 @@
  	<label for="season">Season:</label>
 	<select name="season" id="season">
 	 	<option value="-">-</option>
-    	<option value="Spring">spring</option>
-    	<option value="Summer">summer</option>
- 	   	<option value="Fall">fall</option>
-  	  	<option value="Winter">winter</option>
+    	<option value="Spring">Spring</option>
+    	<option value="Summer">Summer</option>
+ 	   	<option value="Fall">Fall</option>
+  	  	<option value="Winter">Winter</option>
  	 </select>
  	<br>
  	<br>

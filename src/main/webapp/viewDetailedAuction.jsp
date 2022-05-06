@@ -19,7 +19,9 @@
 	<%
 	long currAuc = 0;
 	float inc = 0;
+	String winner = "";
 	try {
+
 		//Get the database connection
 		ApplicationDB db = new ApplicationDB();	
 		Connection con = db.getConnection();
@@ -64,7 +66,12 @@
 			<td><%= rs1.getString("name") %></td>
 			<td><%= rs1.getString("clothingType") %></td>
 			<td><%= rs1.getString("size") %></td>
-			<td><%= rs1.getString("color") %></td>
+			<% 	String color = rs1.getString("color");
+				if (color == null) {
+					color = "N/A";
+				}
+			%>
+			<td><%= color %></td>
 			<% 	String seas = rs1.getString("season");
 				if (seas == null) {
 					seas = "N/A";
@@ -80,12 +87,12 @@
 				}
 			%>
 			<td><%= max %></td>
-			<%	String win = rs1.getString("winner");
-				if (win == null) {
-					win = "N/A";
+			<%	winner = rs1.getString("winner");
+				if (winner == null) {
+					winner = "N/A";
 				}
 			%>
-			<td><%= win %></td>
+			<td><%= winner %></td>
 		</tr>
 		<%
 			}
@@ -122,17 +129,18 @@
 		%>
 	</table>
 	
-	
-	<%
+	<% 
 	} catch (Exception e) {
 		out.print(e);
 	} 
 	%>
 	
+	
+	
 	<br>
 	<h2>Place A Bid:</h2>
 	<!-- SET A BID ON AUCTION -->
-	<form method = "post" action = "setBid.jsp?aucid=<%= currAuc %>">
+	<form method = "post" action = "setBid.jsp?aucid=<%= currAuc %>" id = bidForm>
 	 	Amount* &emsp;<input type="number" name="bidAmt" step="<%= inc %>" min="0">	
 	 	<br><br>
  		Autobid on this Auction?*
@@ -149,6 +157,8 @@
 		 	    if (event.target && event.target.matches("input[type='radio']")) {
 		 	    	document.getElementById("autoinc").readOnly = true;
 		 	    	document.getElementById("automax").readOnly = true;
+		 	    	document.getElementById("autoinc").innerHTML = "";
+		 	    	document.getElementById("automax").innerHTML = "";
 		 	    }
 		 	});
 	 	</script>

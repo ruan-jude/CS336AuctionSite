@@ -19,23 +19,30 @@
 		String color = request.getParameter("color");
 		String season = request.getParameter("season");
 		
-		
 		String incrementstr = request.getParameter("increment");
 		String minPricestr = request.getParameter("minPrice");
 		String dateClosestr = request.getParameter("closingDate");
-		float minPrice = -1;
+		dateClosestr = dateClosestr.replace("T"," ");
+		float minPrice = 0;
 		float increment = -1;
 		
 		//Get current datetime
 		Date dt = new Date();
 		java.text.SimpleDateFormat sdf = 
-			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String current = sdf.format(dt);
 		
 		
 		if (clothingType.length() == 0 || incrementstr.length() == 0 || dateClosestr.length() == 0 || 
 				name.length() == 0 || size.length() == 0){
 			session.setAttribute("invalidinput","Error: required(*) field(s) are empty.");
+			response.sendRedirect("createAuction.jsp");
+			return;
+		} 
+		//Check if date is in future
+		Date dateClose = sdf.parse(dateClosestr);
+		if (dt.compareTo(dateClose) >= 0) {
+			session.setAttribute("invalidinput","Error: closing date must be in the future");
 			response.sendRedirect("createAuction.jsp");
 			return;
 		}
@@ -87,8 +94,7 @@
 		ps.setLong(1, aucid);
 		ps.setString(2, current);
 		ps.setString(3, dateClosestr);
-		if (minPrice != -1) ps.setFloat(4, minPrice);
-		else ps.setString(4, null);
+		ps.setFloat(4, minPrice);
 		ps.setFloat(5, increment);
 		ps.setString(6, session.getAttribute("email").toString());
 		ps.setLong(7,itemid);
@@ -96,6 +102,64 @@
 		ps.executeUpdate();
 		
 		out.print("Auction Created!");
+		
+		
+		//Set a scheduler to close the auction and select winner at closing date/time:
+		Timer t = new Timer();  
+		TimerTask tt = new TimerTask() {  
+		    @Override  
+		    public void run() {  
+		    	ApplicationDB db = new ApplicationDB();
+		    	Connection con = db.getConnection();
+		    	try {
+		    		Boolean noBids = true;
+		    		Date now = new Date();
+		    		java.text.SimpleDateFormat sdf = 
+		   			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
+		    		Statement s = con.createStatement();
+		    		ResultSet allBids = s.executeQuery("SELECT * FROM bids b, auctions a WHERE b.auctionID = a.auctionID AND a.winner IS NULL ORDER BY b.amount DESC");
+		    		while (allBids.next()) {
+		    			noBids = false;
+		    			String dateCloseStr = allBids.getString("dateClose");
+		    			dateCloseStr = dateCloseStr.replace("T"," ");
+		    			Date dateClose = sdf.parse(dateCloseStr);
+		    			if (now.compareTo(dateClose) >= 0) {
+		    				float minPrice = allBids.getFloat("minPrice");
+		    				float highestBid = allBids.getFloat("amount");
+		    				long aucid = allBids.getLong("auctionID");
+		    				if (highestBid >= minPrice) {			
+		    					Statement s2 = con.createStatement();
+		    					s2.executeUpdate("UPDATE auctions SET winner = '" + allBids.getString("bidder") + "' WHERE auctionID = '" + aucid + "'");
+		    				} else {
+		    					Statement s2 = con.createStatement();
+		    					s2.executeUpdate("UPDATE auctions SET winner = '" + allBids.getString("owner") + "' WHERE auctionID = '" + aucid + "'");
+		    				}
+		    			} else {
+		    				continue;
+		    			}
+		    		}
+		    		if (noBids) {
+		    			Statement s3 = con.createStatement();
+			    		ResultSet rs3 = s3.executeQuery("SELECT * FROM auctions");
+			    		while (rs3.next()) {
+			    			String dateCloseStr = rs3.getString("dateClose");
+			    			dateCloseStr = dateCloseStr.replace("T"," ");
+			    			Date dateClose = sdf.parse(dateCloseStr);
+			    			if (now.compareTo(dateClose) >= 0) {
+			    				long aucid = rs3.getLong("auctionID");
+			    				Statement s2 = con.createStatement();
+		    					s2.executeUpdate("UPDATE auctions SET winner = '" + rs3.getString("owner") + "' WHERE auctionID = '" + aucid + "'");
+			    			}
+			    		}
+		    		}
+		    	} catch (Exception e) {
+		    		e.printStackTrace();
+		    	}
+		    	
+		        
+		    };  
+		};  
+		t.schedule(tt, dateClose);  
 		
 	} catch (Exception e) {
 		e.printStackTrace();
