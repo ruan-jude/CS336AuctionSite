@@ -37,8 +37,10 @@
 		} while (!st.execute(findid));
 		
 		//Insert new item into items table:
-		String insert = "INSERT INTO customerserv (questionID, user, dateAsked, question, customerRep, dateAnswered, resolved)" 
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO customerserv (questionID, user, dateAsked, question, answer, customerRep, dateAnswered, resolved)" 
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		out.print(insert);
 		
 		PreparedStatement ps1 = con.prepareStatement(insert);
 		ps1.setLong(1,questionID);
@@ -48,6 +50,7 @@
 		ps1.setString(5,null);
 		ps1.setString(6,null);
 		ps1.setString(7,null);
+		ps1.setString(8,null);
 		out.print(ps1);
 		ps1.executeUpdate();
 		
