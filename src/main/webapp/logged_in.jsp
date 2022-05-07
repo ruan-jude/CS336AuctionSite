@@ -25,5 +25,9 @@
 	<form method = "get" action = postQuestion.jsp>
 		<input type="submit" value="Post Question">
 	</form>
+	<br>
+	<form method = "get" action = viewQuestions.jsp>
+		<input type="submit" value="View Questions and Answers">
+	</form>
 </body>
 </html>
