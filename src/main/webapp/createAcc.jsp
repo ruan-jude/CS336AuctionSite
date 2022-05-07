@@ -39,7 +39,11 @@
 			ps.setString(1, un);
 			ps.setString(2, email);
 			ps.setBoolean(3, false);
-			ps.setBoolean(4, false);
+			if(request.getParameter("code") != null){
+				ps.setBoolean(4,true);
+			}
+			else
+				ps.setBoolean(4, false);
 			//Run the query against the DB
 			ps.executeUpdate();
 			

@@ -68,11 +68,9 @@
 			//Make a SELECT query from the table specified by the 'command' parameter at the index.jsp
 			String str = "";
 			
-			out.println("DSFSF");
 			
 			
 			if(request.getParameter("month") != null){
-				out.println("IM FUCKING GAY");
 				String month = request.getParameter("month");
 				str = "SELECT * FROM items i, auctions a WHERE i.itemID = a.itemID AND " +
 					  "(monthname(dateOpen) = '" + month + "' or monthname(dateClose) = '" + month + "')";

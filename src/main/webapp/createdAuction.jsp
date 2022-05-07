@@ -101,6 +101,8 @@
 		//Run the query against the DB
 		ps.executeUpdate();
 		
+		out.print(ps);
+		
 		out.print("Auction Created!");
 		
 		

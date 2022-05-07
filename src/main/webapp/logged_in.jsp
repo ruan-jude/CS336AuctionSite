@@ -12,6 +12,7 @@
     	out.println("Login Successful. Welcome " + session.getAttribute("user"));
 	%>
 	<a href = "log_out.jsp"> LOGOUT </a>
+	
 	<br> <br>
 	<form method = "get" action = createAuction.jsp>
 		<input type="submit" value="Create Auction">
@@ -19,6 +20,10 @@
 	<br>
 	<form method = "get" action = viewAuction.jsp>
 		<input type="submit" value="View Items for Auction">
+	</form>
+	<br>
+	<form method = "get" action = postQuestion.jsp>
+		<input type="submit" value="Post Question">
 	</form>
 </body>
 </html>
