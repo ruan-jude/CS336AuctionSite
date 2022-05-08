@@ -9,7 +9,7 @@
 <title>Login</title>
 </head>
 <body>
-	<h1>Online Auction Site</h1>
+	<h1>Welcome to BuyMe Auctions! Log In to Begin</h1>
 	<div id="Login Form">
 		<form method="get" action=loginTest.jsp>
 			<table>

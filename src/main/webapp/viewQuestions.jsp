@@ -9,6 +9,7 @@
 <title>View Q&A</title>
 </head>
 <body>
+<h1>Questions and Answers</h1>
 	<%
 try {
 		//Get the database connection

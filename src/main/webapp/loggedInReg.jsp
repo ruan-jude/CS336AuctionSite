@@ -9,7 +9,7 @@
 <title>Account Home</title>
 </head>
 <body>
-	<h1>Online Auction Site</h1>
+	<h1>BuyMe Auctions</h1>
 	<%	
     	out.println("Welcome " + session.getAttribute("user") + "!");
 	%>
