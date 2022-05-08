@@ -11,7 +11,11 @@
 	<%	
     	out.println("Login Successful. Welcome " + session.getAttribute("user"));
 	%>
+	<br><br>
 	<a href = "log_out.jsp"> LOGOUT </a>
 	<br> <br>
+	<form method = "get" action = answerQuestion.jsp>
+		<input type="submit" value="answer Question">
+	</form>
 </body>
 </html>
