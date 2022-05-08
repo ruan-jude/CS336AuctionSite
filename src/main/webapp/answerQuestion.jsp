@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="src.main.java.com.cs336.pkg.*"%>
+	pageEncoding="ISO-8859-1" import="src.main.java.com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*, java.util.Date"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Answer Question</title>
 </head>
 <body>
+	<h1>Answer a Question!</h1>
 	<%
 try {
 		//Get the database connection
@@ -35,10 +36,9 @@ try {
 			<td><%= result.getString("questionID") %></td>
 			<td><%= result.getString("question") %></td>
 			<td>
-				<% if(result.getString("answer") == null) out.println("unanswered"); else result.getString("answer"); %>
+				<% if(result.getString("answer") == null) out.println("unanswered"); else out.println(result.getString("answer")); %>
 			</td>
 		</tr>
-
 
 		<% } 
 			result.close();%>
@@ -46,23 +46,29 @@ try {
 
 	<% } catch (Exception e) {
 			out.print(e);
-}%>
-<br><br>
-	Answer Question
+}
+	%>
 	<br>
-		<form method="get" action="answeredQuestion.jsp">
-			<table>
-				<tr>    
-					<td>Enter Question ID</td><td><input type="text" name="questionID"></td>
-				</tr>
-			</table>
-			Type Text Here:
-			<textarea name="answer_text" cols="50" rows="10"></textarea>
-			<input type="submit" value="SUBMIT">
-		</form>
 	<br>
+	<form method="get" action="answeringQuestion.jsp">
+		<table>
+			<tr>
+				<td>Enter Question ID</td>
+				<td><input type="text" name="questionID"></td>
+			</tr>
+		</table>
+		<textarea name="answer_text" cols="50" rows="10"></textarea>
+		<input type="submit" value="SUBMIT">
+	</form>
 </body>
-<form method = "get" action = "logged_in_rep.jsp">
+
+<%
+if(session.getAttribute("invalidinput") != null && session.getAttribute("invalidinput") != ""){
+	out.println(session.getAttribute("invalidinput"));
+	session.setAttribute("invalidinput","");}
+%>
+<br>
+<form method="get" action="loggedInRep.jsp">
 	<input type="submit" value="Back">
 </form>
 </html>

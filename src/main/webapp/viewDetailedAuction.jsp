@@ -167,6 +167,10 @@
 	 	<br>
 	 	Autobid Max &emsp;<input type = "number" name="bidderMax" step="<%= inc %>" min="0" id="automax" readOnly>
 	 	<br>
+	 	If no autobid, set an alert if someone bids higher than your bid?
+	 	<input type= "radio" name = "setAlert" value = "yes" id = "yesAlert"/> Yes
+	 	<input type= "radio" name = "setAlert" value = "no" id = "noAlert"/> No
+	 	<br>
 		<input type="submit" value="Place Bid">
 	</form>
 	<%	

@@ -19,6 +19,8 @@
 		String bidstr = request.getParameter("bidAmt");
 		long currAuc = Long.parseLong(request.getParameter("aucid"));
 		String entity = request.getParameter("command");
+		String alertNorm = request.getParameter("setAlert");
+		if (alertNorm == null) alertNorm = "no";
 		String autoincStr = request.getParameter("bidderInc");
 		String automaxStr = request.getParameter("bidderMax");
 		float autoinc = 0;
@@ -57,6 +59,7 @@
 		}
 		if (entity.equals("yes")) {
 			isAutobid = true;
+			alertNorm = "no";
 			if (autoincStr.length() == 0 || automaxStr.length() == 0) {
 				session.setAttribute("invalidinput","Error: autobid field(s) are empty");
 				response.sendRedirect("viewDetailedAuction.jsp");
@@ -94,8 +97,8 @@
 		} while (!st.execute(findid));
 		
 		//Insert new item into items table:
-		String insert = "INSERT INTO bids(bidID, auctionID, amount, bidder, autoIncrement, incrementAmount, maxBid, reachedMax)" 
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO bids(bidID, auctionID, amount, bidder, autoIncrement, incrementAmount, maxBid, reachedMax, didAlertNorm)" 
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps1 = con.prepareStatement(insert);
 		ps1.setLong(1, bidid);
 		ps1.setLong(2, currAuc);
@@ -106,11 +109,14 @@
 			ps1.setFloat(6, autoinc);
 			ps1.setFloat(7, automax);
 			ps1.setBoolean(8, false);
+			ps1.setBoolean(9, false);
 		} else {
 			ps1.setBoolean(5, false);
 			ps1.setString(6, null);
 			ps1.setString(7, null);
 			ps1.setString(8, null);
+			if (alertNorm.equals("yes")) ps1.setBoolean(9, true);
+			else ps1.setBoolean(9, false);
 		}
 		//Run the query
 		ps1.executeUpdate();

@@ -33,7 +33,7 @@
 			if (rs.getBoolean("isAdmin")) {
 				response.sendRedirect("logged_in_admin.jsp");
 			} else if (rs.getBoolean("isRep")) {
-				response.sendRedirect("logged_in_rep.jsp");
+				response.sendRedirect("loggedInRep.jsp");
 			} else {
 				response.sendRedirect("loggedInReg.jsp");
 			}
