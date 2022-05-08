@@ -73,6 +73,7 @@
 		else ps1.setString(5, null);
 		if (!season.equals("-")) ps1.setString(6, season);
 		else ps1.setString(6, null);
+		
 		//Run the query
 		ps1.executeUpdate();
 
@@ -104,7 +105,6 @@
 		//out.print(ps);
 		
 		out.print("Auction Created!");
-		
 		
 		//Set a scheduler to close the auction and select winner at closing date/time:
 		Timer t = new Timer();  

@@ -37,8 +37,8 @@
 		} while (!st.execute(foundID));
 		
 		//Insert new item into items table:
-		String insert = "INSERT INTO itemsReq(requestID, user, clothingType, size, name, color, season)" 
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
+		String insert = "INSERT INTO itemsReq(requestID, user, clothingType, size, name, color, season, fulfilled)" 
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = con.prepareStatement(insert);
 		ps.setLong(1, reqID);
 		ps.setString(2, session.getAttribute("email").toString());
@@ -51,6 +51,7 @@
 		else ps.setString(6, null);
 		if (!season.equals("-")) ps.setString(7, season);
 		else ps.setString(7, null);
+		ps.setBoolean(8, false);
 		
 		//Run the query
 		ps.executeUpdate();
@@ -62,7 +63,7 @@
 	db.closeConnection(con);
 
 %>
-	<form method="get" action="logged_in.jsp">
+	<form method="get" action="loggedInReg.jsp">
 		<input type="submit" value="Back">
 	</form>
 </body>

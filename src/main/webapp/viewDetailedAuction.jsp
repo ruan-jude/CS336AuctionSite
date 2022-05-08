@@ -33,7 +33,7 @@
 		currAuc = Long.parseLong(session.getAttribute("aucID").toString());
 		Statement st1 = con.createStatement();
 		ResultSet rs1 = st1.executeQuery("SELECT * FROM items i, auctions a WHERE i.itemID = a.itemID AND a.auctionID ='" + currAuc +"'");
-	%>
+		%>
 	<h2>Auction Details:</h2>
 	
 	

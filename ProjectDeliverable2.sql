@@ -67,7 +67,7 @@ DROP TABLE IF EXISTS `items`;
 CREATE TABLE `items` (
   `itemID` bigint NOT NULL,
   `clothingType` varchar(50) NOT NULL,
-  `size` varchar(10) NOT NULL,
+  `size` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
   `color` varchar(50) DEFAULT NULL,
   `season` varchar(20) DEFAULT NULL,
@@ -146,13 +146,14 @@ DROP TABLE IF EXISTS `itemsReq`;
 CREATE TABLE `itemsReq` (
 	`requestID` BIGINT NOT NULL,
 	`user` VARCHAR(50) NOT NULL,
-	`clothingType` varchar(50) NOT NULL,
-	`size` varchar(10) DEFAULT NULL,
-	`name` varchar(50) DEFAULT NULL,
-	`color` varchar(50) DEFAULT NULL,
-	`season` varchar(20) DEFAULT NULL,
+	`clothingType` VARCHAR(50) NOT NULL,
+	`size` VARCHAR(50) DEFAULT NULL,
+	`name` VARCHAR(50) DEFAULT NULL,
+	`color` VARCHAR(50) DEFAULT NULL,
+	`season` VARCHAR(20) DEFAULT NULL,
+    `fulfilled` BOOLEAN DEFAULT False,
     PRIMARY KEY (`requestID`),
     FOREIGN KEY (`user`) REFERENCES `users`(`email`) ON DELETE CASCADE
-);
+    );
 
 -- Dump completed on 2022-04-05 21:35:43

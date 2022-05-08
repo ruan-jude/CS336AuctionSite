@@ -49,15 +49,14 @@ table td {
 			Statement autoBidMaxed = con.createStatement();
 			ResultSet checkAutoBids = autoBidMaxed.executeQuery("SELECT * FROM auctions a, items i, bids b WHERE i.itemID = a.itemID AND b.auctionID = a.auctionID AND b.reachedMax = 1 AND b.didAlert = 0 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
 			while (checkAutoBids.next()) {
-	%>
-	<div class="alert">
-		<span class="closebtn"
-			onclick="this.parentElement.style.display='none';">&times;</span>
-		Someone has placed a bid that puts your autobid over your upper limit
-		for the item, <strong><%=checkAutoBids.getString("name")%></strong>.
-	</div>
-
-	<% 	
+			%>
+			<div class="alert">
+				<span class="closebtn"
+					onclick="this.parentElement.style.display='none';">&times;</span>
+				Someone has placed a bid that puts your autobid over your upper limit
+				for the item, <strong><%=checkAutoBids.getString("name")%></strong>.
+			</div>
+			<% 	
 				Statement st = con.createStatement();
 				st.executeUpdate("UPDATE bids SET bids.didAlert = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
 			}
@@ -100,7 +99,6 @@ table td {
 				str = "SELECT * FROM items i,auctions a WHERE i.itemID = a.itemID ORDER BY dateOpen DESC";
 			}
 			//Run the query against the database.
-			
 			//out.println(str);
 			
 			ResultSet result = stmt.executeQuery(str);
