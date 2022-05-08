@@ -93,7 +93,7 @@ CREATE TABLE `auctions` (
   `bidding` float,
   `winner` varchar(50) DEFAULT NULL,
   `owner` varchar(50) NOT NULL,
-  `wonOwn` boolean DEFAULT false,
+  `ownWin` boolean DEFAULT false,
   PRIMARY KEY (`auctionID`), FOREIGN KEY (`winner`) references `users`(`email`),
   FOREIGN KEY (`owner`) references `users`(`email`) ON DELETE CASCADE, 
   FOREIGN KEY (`itemID`) references `items`(`itemID`) ON DELETE CASCADE
