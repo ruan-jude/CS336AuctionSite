@@ -93,6 +93,7 @@ CREATE TABLE `auctions` (
   `bidding` float,
   `winner` varchar(50) DEFAULT NULL,
   `owner` varchar(50) NOT NULL,
+  `wonOwn` boolean DEFAULT false,
   PRIMARY KEY (`auctionID`), FOREIGN KEY (`winner`) references `users`(`email`),
   FOREIGN KEY (`owner`) references `users`(`email`) ON DELETE CASCADE, 
   FOREIGN KEY (`itemID`) references `items`(`itemID`) ON DELETE CASCADE
@@ -117,7 +118,9 @@ CREATE TABLE `bids` (
   `incrementAmount` float,
   `maxBid` float,
   `reachedMax` boolean,
-  `didAlert` boolean DEFAULT false,
+  `didAlertNorm` boolean DEFAULT false,
+  `didAlertAuto` boolean DEFAULT false,
+  `didAlertWin` boolean DEFAULT false,
   PRIMARY KEY (`bidID`), FOREIGN KEY (`bidder`) references `users`(`email`) ON DELETE CASCADE, 
   FOREIGN KEY (`auctionID`) references `auctions`(`auctionID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
