@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Testing Login</title>
+<title>LoginTest</title>
 </head>
 <body>
 	<%
@@ -18,7 +18,7 @@
 		
 		if(un.length() == 0 || email.length() == 0){
 			session.setAttribute("invalidinput","Error: fields are empty");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("loginPage.jsp");
 			return;
 		}
 		
@@ -35,11 +35,11 @@
 			} else if (rs.getBoolean("isRep")) {
 				response.sendRedirect("logged_in_rep.jsp");
 			} else {
-				response.sendRedirect("logged_in.jsp");
+				response.sendRedirect("loggedInReg.jsp");
 			}
 		} else {
 			session.setAttribute("invalidinput","Unsuccessful Login. Username/email did not work. Please try again");
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("loginPage.jsp");
 		}
 		
 		rs.close();

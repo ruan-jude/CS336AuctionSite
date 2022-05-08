@@ -28,7 +28,7 @@
 </style>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>ViewAuction</title>
 
 <style>
 table td {
@@ -209,7 +209,7 @@ table td {
 		}%>
 
 	<br>
-	<form method="get" action="logged_in.jsp">
+	<form method="get" action="loggedInReg.jsp">
 		<input type="submit" value="Back">
 	</form>
 </body>

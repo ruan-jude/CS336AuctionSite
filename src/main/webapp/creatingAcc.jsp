@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>CreatingAccount</title>
 </head>
 <body>
 <%
@@ -18,24 +18,36 @@
 		
 		if(un.length() == 0 || email.length() == 0){
 			session.setAttribute("invalidinput","Error: fields are empty.");
-			response.sendRedirect("createDeleteAcc.jsp");
+			response.sendRedirect("createDeletePage.jsp");
 			return;
 		}
 		
 		Statement st = con.createStatement();
-		String str = "SELECT * FROM users WHERE email = '" + email + "' and username = '" + un + "'";
+		String str = "SELECT * FROM users WHERE email = '" + email + "'";
 		ResultSet rs = st.executeQuery(str);
 		if (rs.next()) {
-			//Make an insert statement for the Sells table:
-			String delete = "DELETE FROM users WHERE email = '" + email + "' and username = '" + un + "'";
-			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
-			Statement st2 = con.createStatement();
-			st2.execute(delete);
-			
-			out.print("Account Deleted!");
+			session.setAttribute("invalidinput","Email already in use. Please try a different email.");
+			response.sendRedirect("createDeletePage.jsp");
 		} else {
-			session.setAttribute("invalidinput","No accounts exist with this username and email combination");
-			response.sendRedirect("createDeleteAcc.jsp");
+			//Make an insert statement for the Sells table:
+			String insert = "INSERT INTO users(username, email, isAdmin, isRep)"
+					+ "VALUES (?, ?, ?, ?)";
+			//Create a Prepared SQL statement allowing you to introduce the parameters of the query
+			PreparedStatement ps = con.prepareStatement(insert);
+
+			//Add parameters of the query. Start with 1, the 0-parameter is the INSERT statement itself
+			ps.setString(1, un);
+			ps.setString(2, email);
+			ps.setBoolean(3, false);
+			if(request.getParameter("code") != null){
+				ps.setBoolean(4,true);
+			}
+			else
+				ps.setBoolean(4, false);
+			//Run the query against the DB
+			ps.executeUpdate();
+			
+			out.print("Account Created!");
 		}
 		db.closeConnection(con);
 	} catch (Exception e) {
@@ -43,7 +55,7 @@
 	}
 
 %>
-<form method = "get" action = "createDeleteAcc.jsp">
+<form method = "get" action = "loginPage.jsp">
 	<input type="submit" value="Back">
 </form>
 </body>

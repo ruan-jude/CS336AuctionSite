@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Create an Auction</h1>
-	<form method="post" action=createdAuction.jsp>
+	<form method="post" action="creatingAuction.jsp">
 		<label for="clothing">Choose a clothing type*:</label> <select
 			name="clothing" id="clothing">
 			<option value="Shirt">Shirt</option>
@@ -61,7 +61,7 @@
 	%>
 	</form>
 	<br>
-	<form method="get" action="logged_in.jsp">
+	<form method="get" action="loggedInReg.jsp">
 		<input type="submit" value="Back">
 	</form>
 

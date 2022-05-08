@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Request Item</h1>
-	<form method="post" action=createRequest>
+	<form method="post" action=createRequest.jsp>
 		<label for="clothing">Choose a clothing type*:</label> <select
 			name="clothing" id="clothing">
 			<option value="Shirt">Shirt</option>

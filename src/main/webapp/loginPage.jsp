@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>AuctionSite</title>
+<title>LoginPage</title>
 </head>
 <body>
 	<h1>Online Auction Site</h1>
 	<div id="Login Form">
-		<form method="get" action=logtest.jsp>
+		<form method="get" action=loginTest.jsp>
 			<table>
 				<tr>
 					<td>Username</td>
@@ -32,7 +32,7 @@
 	</div>
 	<br>
 	<div id="Create/Delete Account">
-		<form method="get" action=createDeleteAcc.jsp>
+		<form method="get" action=createDeletePage.jsp>
 			<input type="submit" name="createDelete"
 				value="Create/Delete An Account">
 		</form>

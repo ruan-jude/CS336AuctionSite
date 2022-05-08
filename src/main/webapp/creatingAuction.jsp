@@ -167,7 +167,7 @@
 	db.closeConnection(con);
 
 %>
-	<form method="get" action="createAuction.jsp">
+	<form method="get" action="loggedInReg.jsp">
 		<input type="submit" value="Back">
 	</form>
 </body>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>ViewQA</title>
 </head>
 <body>
 <%
@@ -48,7 +48,7 @@ try {
 			out.print(e);
 }%>
 </body>
-<form method = "get" action = "logged_in.jsp">
+<form method = "get" action = "loggedInReg.jsp">
 			<input type="submit" value="Back">
 </form>
 </html>

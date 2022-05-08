@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Create/Delete Account</title>
+<title>CreateDeletePage</title>
 </head>
 <body>
 	<h1>Create/Delete Account</h1>
-	<form method="post" action="createAcc.jsp">
+	<form method="post" action="creatingAcc.jsp">
 		<table>
 			<tr>
 				<td>Username</td>
@@ -22,7 +22,7 @@
 			</tr>
 		</table>
 		<input type="submit" value="Create Account"> <input
-			type="submit" value="Delete Account" formaction="deleteAcc.jsp">
+			type="submit" value="Delete Account" formaction="deletingAcc.jsp">
 		<%	
 		if(session.getAttribute("invalidinput") != null && session.getAttribute("invalidinput") != ""){
 			out.println(session.getAttribute("invalidinput"));
@@ -30,7 +30,7 @@
 	%>
 	</form>
 	<br>
-	<form method="get" action="index.jsp">
+	<form method="get" action="loginPage.jsp">
 		<input type="submit" value="Back">
 	</form>
 </body>
