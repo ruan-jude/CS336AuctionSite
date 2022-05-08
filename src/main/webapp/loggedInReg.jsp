@@ -60,23 +60,18 @@
 				if (rs1.getString("season") != null) query += " AND i.season=\""+rs1.getString("season")+"\"";
 				ResultSet rs2 = st2.executeQuery(query);
 				boolean found = rs2.next();
-				if (rs1.getBoolean("fulfilled")){
-					found = true;
+				if (found){
+					Statement st3 = con.createStatement();
+					int res = st3.executeUpdate("UPDATE itemsReq SET fulfilled = true WHERE requestID = " + rs1.getLong("requestID"));
 					out.println("valid auctions");
-				} else {
-					// Checks if the created auction is being searched for	
-					if (found)
-					{
-						Statement st3 = con.createStatement();
-						int res = st3.executeUpdate("UPDATE itemsReq SET fulfilled = true WHERE requestID = " + rs1.getLong("requestID"));
-						out.println("valid auctions");
-					} else out.println("no valid auctions"); 
-				} 
+				} else out.println("no valid auctions"); 
 			%>
 			</td>
 			<td>
 				<%
-				if (found == false) out.println("");
+				if (found == false) {
+					out.println("");
+				}
 				else {
 				%> <a
 				href="viewDetailedAuction.jsp?aucid=<%= rs2.getString("auctionID") %>"><%= rs2.getString("name") %></a>

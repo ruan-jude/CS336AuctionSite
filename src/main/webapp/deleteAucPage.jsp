@@ -17,13 +17,15 @@
 		ApplicationDB db = new ApplicationDB();
 		Connection con = db.getConnection();
 		Statement stmt = con.createStatement();
-		String str = "SELECT * from auction";
+		String str = "SELECT * FROM auctions a JOIN items i ON a.itemID = i.itemID";
 		ResultSet result = stmt.executeQuery(str);
 	%>
 	<table border='1'>
 		<tr>
 			<td>auctionID</td>
-			<td>itemID</td>
+			<td>clothingType</td>
+			<td>name</td>
+			<td>size</td>
 			<td>dateOpen</td>
 			<td>dateClose</td>
 			<td>owner</td>
@@ -34,7 +36,9 @@
 		%>
 		<tr>
 			<td><%=result.getString("auctionID")%></td>
-			<td><%=result.getString("itemID")%></td>
+			<td><%=result.getString("clothingType")%></td>
+			<td><%=result.getString("name")%></td>
+			<td><%=result.getString("size")%></td>
 			<td><%=result.getString("dateOpen")%></td>
 			<td><%=result.getString("dateClose")%></td>
 			<td><%=result.getString("owner")%></td>
@@ -51,14 +55,14 @@
 	}
 	%>
 	<br>
-	<form method="post" action="changingUserRep.jsp">
+	<form method="post" action="deletingAuction.jsp">
 		<table>
 			<tr>
 				<td>AuctionID</td>
 				<td><input type="test" name="auctionID"></td>
 			</tr>
 		</table>
-		<input type="submit" value="Change Email">
+		<input type="submit" value="Delete Auction">
 	</form>
 	<br>
 	<%
