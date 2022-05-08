@@ -23,7 +23,7 @@
 		String answer = request.getParameter("answer_text");
 		boolean resolved = true;
 		
-		String str = "UPDATE customerserv SET answer = ?, customerRep = ?, dateAnswered = ?, resolved = ? " +
+		String str = "UPDATE customerserv SET answer = ?, answeringRep = ?, dateAnswered = ?, resolved = ? " +
 					 "WHERE questionID = " + questionID;
 		
 		PreparedStatement ps1 = con.prepareStatement(str);

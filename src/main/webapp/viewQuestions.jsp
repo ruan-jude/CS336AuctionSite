@@ -35,7 +35,7 @@ try {
 			<td><%= result.getString("questionID") %></td>
 			<td><%= result.getString("question") %></td>
 			<td>
-				<% if(result.getString("answer") == null) out.println("unanswered"); else result.getString("answer"); %>
+				<% if(result.getString("answer") == null) out.println("unanswered"); else out.println(result.getString("answer")); %>
 			</td>
 		</tr>
 
