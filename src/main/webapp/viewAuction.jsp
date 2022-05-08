@@ -100,20 +100,26 @@ table td {
 							Congratulations! You won the item, <strong><%= wins.getString("name")%></strong>! 
 						</div>
 						<% 	
-					} else {
-						%>
-						<div class="alert">
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							Your auction ended with no winners since your minimum was not reached or no one bet.
-							For item, <strong><%= wins.getString("name")%></strong>.
-						</div>
-						<% 	
 					}
 					Statement st = con.createStatement();
 					st.executeUpdate("UPDATE bids SET bids.didAlertWin = 1 WHERE bidID = '" + wins.getLong("bidID") + "'");
 				}
 			}
+			Statement z = con.createStatement();
+			ResultSet ownWin = z.executeQuery("SELECT * FROM auctions WHERE winner IS NOT NULL AND winner = '" + session.getAttribute("email") + "' AND ownWin = 0");
+			while (ownWin.next()) {
+				%>
+				<div class="alert">
+					<span class="closebtn"
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					Your auction ended with no winners since your minimum was not reached or no one bet.
+					For item, <strong><%= wins.getString("name")%></strong>.
+				</div>
+				<% 	
+				Statement st = con.createStatement();
+				st.executeUpdate("UPDATE auctions SET ownWin = 1 WHERE auctionID = '" + ownWin.getLong("auctionID") + "'");
+			}
+			
 			
 			
 			//Create a SQL statement
