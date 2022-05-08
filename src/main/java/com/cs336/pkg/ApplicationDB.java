@@ -33,7 +33,7 @@ public class ApplicationDB {
 			e.printStackTrace();
 		}
 		try {
-			connection = DriverManager.getConnection(connectionUrl, "root", "RJmysql!!22");
+			connection = DriverManager.getConnection(connectionUrl, "root", "Thebluesnake22");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

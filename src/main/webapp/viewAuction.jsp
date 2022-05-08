@@ -106,7 +106,7 @@ table td {
 				}
 			}
 			Statement z = con.createStatement();
-			ResultSet ownWin = z.executeQuery("SELECT * FROM  items i, auctions a WHERE i.itemID = a.itemID AND a.winner IS NOT NULL AND a.winner = '" + session.getAttribute("email") + "' AND a.ownWin = 0");
+			ResultSet ownWin = z.executeQuery("SELECT * FROM  items i, auctions a WHERE i.itemID = a.itemID AND a.winner IS NOT NULL AND a.owner = '" + session.getAttribute("email") + "' AND a.winner = '" + session.getAttribute("email") + "' AND a.ownWin = 0");
 			while (ownWin.next()) {
 				%>
 				<div class="alert">
