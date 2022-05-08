@@ -19,6 +19,14 @@
 	<form method="get" action=editDeletePage.jsp>
 		<input type="submit" value="Edit/Delete Account">
 	</form>
+	<br>
+	<form method="get" action=deleteAucPage.jsp>
+		<input type="submit" value="Delete Auction">
+	</form>
+	<br>
+	<form method="get" action=deleteBidPage.jsp>
+		<input type="submit" value="Delete Bid">
+	</form>
 	<br><br>
 	<form method="get" action=loginPage.jsp>
 		<input type="submit" value="Logout">
