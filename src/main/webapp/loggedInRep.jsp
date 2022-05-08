@@ -4,18 +4,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Customer Rep Home</title>
 </head>
 <body>
 	<h1>Customer Rep</h1>
 	<%	
-    	out.println("Login Successful. Welcome " + session.getAttribute("user"));
+    	out.println("Welcome " + session.getAttribute("user") +"!");
 	%>
 	<br><br>
-	<a href = "log_out.jsp"> LOGOUT </a>
-	<br> <br>
 	<form method = "get" action = answerQuestion.jsp>
-		<input type="submit" value="answer Question">
+		<input type="submit" value="Answer a Question">
+	<br> <br>
+	</form>
+		<form method="get" action=loginPage.jsp>
+		<input type="submit" value="Logout">
 	</form>
 </body>
 </html>

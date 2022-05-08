@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Question Answered</title>
 </head>
 <body>
 <%	
@@ -21,6 +21,13 @@
 		
 		String questionID = request.getParameter("questionID");
 		String answer = request.getParameter("answer_text");
+		
+		if(answer == null || answer.length() == 0){
+			session.setAttribute("invalidinput","Error: fields are empty");
+			response.sendRedirect("answerQuestion.jsp");
+			return;
+		}
+		
 		boolean resolved = true;
 		
 		String str = "UPDATE customerserv SET answer = ?, answeringRep = ?, dateAnswered = ?, resolved = ? " +
@@ -32,17 +39,9 @@
 		ps1.setString(3,current);
 		ps1.setBoolean(4,resolved);
 		
-		
-		out.print(ps1);
-		
+				
 		ps1.executeUpdate();	
-		out.print("Question Created!");
-		
-		
-		
-		
-
-		
+		out.print("Question Answered!");
 	} catch (Exception e) {
 		e.printStackTrace();
 	}
