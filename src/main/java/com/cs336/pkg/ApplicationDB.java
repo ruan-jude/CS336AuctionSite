@@ -34,6 +34,7 @@ public class ApplicationDB {
 		}
 		try {
 			// Create a connection to your DB
+
 			connection = DriverManager.getConnection(connectionUrl, "root", "Dragonoid26!");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
