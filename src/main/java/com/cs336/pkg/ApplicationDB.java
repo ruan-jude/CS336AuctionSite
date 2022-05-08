@@ -1,4 +1,4 @@
-package com.cs336.pkg;
+package src.main.java.com.cs336.pkg;
 
 import java.sql.Connection;
 

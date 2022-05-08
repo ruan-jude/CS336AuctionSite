@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
+    pageEncoding="ISO-8859-1" import="src.main.java.com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*, java.util.Date"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html>
