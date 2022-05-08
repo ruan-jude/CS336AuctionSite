@@ -39,7 +39,11 @@ try {
 				<% if(result.getString("answer") == null) out.println("unanswered"); else out.println(result.getString("answer")); %>
 			</td>
 		</tr>
-
+			<%	
+		if(session.getAttribute("invalidinput") != null && session.getAttribute("invalidinput") != ""){
+			out.println(session.getAttribute("invalidinput"));
+			session.setAttribute("invalidinput","");}
+	%>
 
 		<% } 
 			result.close();%>
