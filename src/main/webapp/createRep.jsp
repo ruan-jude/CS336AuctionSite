@@ -7,19 +7,22 @@
 <title>Create Customer Rep Account</title>
 </head>
 <body>
-	<br><br>
-	Create Account for Customer Representative
+	<h3>Create Account for Customer Representative</h3>
+	<form method="get" action="creatingRepAcc.jsp">
+		<table>
+			<tr>
+				<td>Email</td><td><input type="text" name="email"></td>
+			</tr>
+			<tr>    
+				<td>Username</td><td><input type="text" name="username"></td>
+			</tr>
+		</table>
+		<input type="submit" value="Create">
+	</form>
 	<br>
-		<form method="get" action="creatingAcc.jsp">
-			<table>
-				<tr>    
-					<td>Username</td><td><input type="text" name="username"></td>
-					<td>Email</td><td><input type="text" name="email"></td>
-					<td>Enter Code (Code: Y)</td><td><input type="text" name="code"></td>
-				</tr>
-			</table>
-			<input type="submit" value="SUBMIT">
-		</form>
-	<br>
+	
+	<form method = "get" action = "logged_in_admin.jsp">
+		<input type="submit" value="Back">
+	</form>
 </body>
 </html>
