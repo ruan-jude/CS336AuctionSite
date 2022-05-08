@@ -50,7 +50,7 @@ try {
 
 	<br>
 	<br>
-	<form method="get" action=loginTest.jsp>
+	<form method="post" action=searchKeywords.jsp>
 		<table>
 			<tr>Search by keywords (separated by a space ' '):
 			</tr>
@@ -67,8 +67,10 @@ try {
 			session.setAttribute("invalidinput","");}
 	%>
 	</form>
+	<br>
+	<form method="get" action="loggedInReg.jsp">
+		<input type="submit" value="Back">
+	</form>
 </body>
-<form method="get" action="loggedInReg.jsp">
-	<input type="submit" value="Back">
-</form>
+
 </html>

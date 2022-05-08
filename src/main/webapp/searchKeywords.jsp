@@ -14,12 +14,12 @@
 	Connection con = db.getConnection();
 	try {
 		String keyStr = request.getParameter("keywords");
-		String[] keywords = keyStr.split("\\s+");
-		
-		if(keywords.length == 0){
+		if(keyStr == null || keyStr.length() == 0){
 			session.setAttribute("invalidinput","Error: no keywords entered.");
 			response.sendRedirect("viewQuestions.jsp");
+			return;
 		}
+		String[] keywords = keyStr.split("\\s+");
 		
 		Statement st = con.createStatement();
 		String query = "SELECT * FROM customerServ WHERE question LIKE '%" + keywords[0] + "%'";
