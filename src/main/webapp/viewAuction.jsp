@@ -62,7 +62,7 @@ table td {
 			</div>
 			<% 	
 				Statement st = con.createStatement();
-				st.executeUpdate("UPDATE bids SET bids.didAlertAuto = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
+				st.executeUpdate("UPDATE bids SET didAlertAuto = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
 			}
 			
 			//Check if we need alert for non-autobid:
