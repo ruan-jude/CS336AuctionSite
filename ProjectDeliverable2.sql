@@ -126,16 +126,17 @@ CREATE TABLE `bids` (
 
 DROP TABLE IF EXISTS `customerServ`;
 CREATE TABLE `customerServ` (
-	`questionID` BIGINT,
-    `user` VARCHAR(50),
+	`questionID` BIGINT NOT NULL,
+	`question` VARCHAR(1000),
+    `askingUser` VARCHAR(50),
     `dateAsked` DATETIME,
-    `question` VARCHAR(1000),
-    `customerRep` VARCHAR(50),
+    `answer` VARCHAR(1000),
+    `answeringRep` VARCHAR(50),
     `dateAnswered` DATETIME,
     `resolved` BOOLEAN,
     PRIMARY KEY (`questionID`), 
-    FOREIGN KEY (`user`) REFERENCES `users`(`email`) ON DELETE CASCADE,
-    FOREIGN KEY (`customerRep`) REFERENCES `users`(`email`) ON DELETE CASCADE
+    FOREIGN KEY (`askingUser`) REFERENCES `users`(`email`) ON DELETE CASCADE,
+    FOREIGN KEY (`answeringRep`) REFERENCES `users`(`email`) ON DELETE CASCADE
     );
 
 --

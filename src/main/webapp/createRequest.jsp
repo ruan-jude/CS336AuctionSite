@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>CreateRequest</title>
+<title>Create Request</title>
 </head>
 <body>
 	<%

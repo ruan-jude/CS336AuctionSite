@@ -6,15 +6,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>RegLoginScreen</title>
+<title>Account Home</title>
 </head>
 <body>
 	<h1>Online Auction Site</h1>
 	<%	
     	out.println("Welcome " + session.getAttribute("user") + "!");
 	%>
-	<br> <br> 
-	Requested items:
+	<br>
+	<br> Requested items:
 	<table border='1'>
 		<tr>
 			<td>Item Type</td>
@@ -37,12 +37,21 @@
 			while(rs1.next()){
 		%>
 		<tr>
-			<td><%= rs1.getString("clothingType") %> </td>
-			<td><% if (rs1.getString("name") == null) out.println(""); else out.println(rs1.getString("name")); %></td>
-			<td><% if (rs1.getString("size") == null) out.println(""); else out.println(rs1.getString("size")); %></td>
-			<td><% if (rs1.getString("color") == null) out.println(""); else out.println(rs1.getString("color")); %></td>
-			<td><% if (rs1.getString("season") == null) out.println(""); else out.println(rs1.getString("season")); %></td>
-			<td><% 
+			<td><%= rs1.getString("clothingType") %></td>
+			<td>
+				<% if (rs1.getString("name") == null) out.println(""); else out.println(rs1.getString("name")); %>
+			</td>
+			<td>
+				<% if (rs1.getString("size") == null) out.println(""); else out.println(rs1.getString("size")); %>
+			</td>
+			<td>
+				<% if (rs1.getString("color") == null) out.println(""); else out.println(rs1.getString("color")); %>
+			</td>
+			<td>
+				<% if (rs1.getString("season") == null) out.println(""); else out.println(rs1.getString("season")); %>
+			</td>
+			<td>
+				<% 
 				Statement st2 = con.createStatement();
 				String query = "SELECT * FROM items i JOIN auctions a ON i.itemID = a.itemID WHERE \"" + rs1.getString("user") + "\" = \"" + session.getAttribute("email").toString() + "\" AND a.winner IS NULL AND i.clothingType=\""+rs1.getString("clothingType")+"\"";
 				if (rs1.getString("name") != null) query += " AND i.name=\""+rs1.getString("name")+"\"";
@@ -63,22 +72,25 @@
 						out.println("valid auctions");
 					} else out.println("no valid auctions"); 
 				} 
-			%></td>
-			<td><%
+			%>
+			</td>
+			<td>
+				<%
 				if (found == false) out.println("");
 				else {
-				%>
-				<a href="viewDetailedAuction.jsp?aucid=<%= rs2.getString("auctionID") %>"><%= rs2.getString("name") %></a>
+				%> <a
+				href="viewDetailedAuction.jsp?aucid=<%= rs2.getString("auctionID") %>"><%= rs2.getString("name") %></a>
 				<%
 				}
 				while (rs2.next()) {
 					out.println(", ");
-				%>
-				<a href="viewDetailedAuction.jsp?aucid=<%= rs2.getString("auctionID") %>"><%= rs2.getString("name") %></a>
+				%> <a
+				href="viewDetailedAuction.jsp?aucid=<%= rs2.getString("auctionID") %>"><%= rs2.getString("name") %></a>
 				<%
 				out.println(" ");
 				}
-			%></td>		
+			%>
+			</td>
 		</tr>
 		<%
 			rs2.close();
@@ -87,7 +99,7 @@
 		%>
 
 	</table>
-		<% 
+	<% 
 		} catch (Exception e) { 
 			out.print(e);
 		}
@@ -116,7 +128,7 @@
 	<h3>
 		<u>Q&A</u>
 	</h3>
-	<form method="get" action=postQuestion.jsp>
+	<form method="get" action=postQuestionPage.jsp>
 		<input type="submit" value="Post Question">
 	</form>
 	<br>

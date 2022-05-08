@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>CreateDeletePage</title>
+<title>Create/Delete</title>
 </head>
 <body>
 	<h1>Create/Delete Account</h1>

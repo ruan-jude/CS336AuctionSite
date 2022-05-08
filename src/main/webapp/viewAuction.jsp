@@ -28,7 +28,7 @@
 </style>
 <head>
 <meta charset="ISO-8859-1">
-<title>ViewAuction</title>
+<title>View Auction</title>
 
 <style>
 table td {

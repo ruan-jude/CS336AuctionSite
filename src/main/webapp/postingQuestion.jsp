@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>PostingQuestion</title>
 </head>
 <body>
 <%	
@@ -22,10 +22,7 @@
 			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
 		String current = sdf.format(dt);
 		
-
-		
 		//Check if date is in future
-		
 		//Create questionID:
 		long questionID;
 		Statement st;
@@ -37,27 +34,25 @@
 		} while (!st.execute(findid));
 		
 		//Insert new item into items table:
-		String insert = "INSERT INTO customerserv (questionID, user, dateAsked, question, answer, customerRep, dateAnswered, resolved)" 
+		String insert = "INSERT INTO customerserv (questionID, question, askingUser, dateAsked, answer, answeringRep, dateAnswered, resolved)" 
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
-		out.print(insert);
+		//out.print(insert);
 		
 		PreparedStatement ps1 = con.prepareStatement(insert);
 		ps1.setLong(1,questionID);
-		ps1.setString(2,session.getAttribute("email").toString());
-		ps1.setString(3,current);
-		ps1.setString(4,question);
+		ps1.setString(2,question);
+		ps1.setString(3,session.getAttribute("email").toString());
+		ps1.setString(4,current);
 		ps1.setString(5,null);
 		ps1.setString(6,null);
 		ps1.setString(7,null);
-		ps1.setString(8,null);
-		out.print(ps1);
+		ps1.setBoolean(8,false);
+		//out.print(ps1);
 		ps1.executeUpdate();
 		
 		
-		
 		out.print("Question Created!");
-		
 
 		
 	} catch (Exception e) {
@@ -67,7 +62,7 @@
 
 %>
 </body>
-<form method = "get" action = "postQuestion.jsp">
+<form method = "get" action = "loggedInReg.jsp">
 	<input type="submit" value="Back">
 </form>
 </body>

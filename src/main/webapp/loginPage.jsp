@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LoginPage</title>
+<title>Login</title>
 </head>
 <body>
 	<h1>Online Auction Site</h1>

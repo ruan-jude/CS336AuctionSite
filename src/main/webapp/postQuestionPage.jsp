@@ -4,13 +4,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Post Question</title>
 </head>
 <body>
 	<br><br>
 	Post Question
 	<br>
-		<form method="get" action="postedQuestion.jsp">	
+		<form method="get" action="postingQuestion.jsp">	
 			<textarea name="paragraph_text" cols="50" rows="10"></textarea>
 			<input type="submit" value="SUBMIT">
 		</form>

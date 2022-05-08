@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>LoginTest</title>
+<title>Login Test</title>
 </head>
 <body>
 	<%
