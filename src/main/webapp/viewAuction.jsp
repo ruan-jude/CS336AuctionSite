@@ -106,14 +106,14 @@ table td {
 				}
 			}
 			Statement z = con.createStatement();
-			ResultSet ownWin = z.executeQuery("SELECT * FROM auctions WHERE winner IS NOT NULL AND winner = '" + session.getAttribute("email") + "' AND ownWin = 0");
+			ResultSet ownWin = z.executeQuery("SELECT * FROM  items i, auctions a WHERE i.itemID = a.itemID AND a.winner IS NOT NULL AND a.winner = '" + session.getAttribute("email") + "' AND a.ownWin = 0");
 			while (ownWin.next()) {
 				%>
 				<div class="alert">
 					<span class="closebtn"
 						onclick="this.parentElement.style.display='none';">&times;</span>
 					Your auction ended with no winners since your minimum was not reached or no one bet.
-					For item, <strong><%= wins.getString("name")%></strong>.
+					For item, <strong><%= ownWin.getString("name")%></strong>.
 				</div>
 				<% 	
 				Statement st = con.createStatement();
