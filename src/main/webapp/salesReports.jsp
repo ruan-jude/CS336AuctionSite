@@ -10,6 +10,9 @@
 </head>
 <body>
 	<h1>Sales Reporting for BuyMe Auctions</h1>
+	<form method="get" action="logged_in_admin.jsp">
+		<input type="submit" value="Return to Admin Dashboard">
+	</form>	
 	<h3>Total Earnings</h3>
 	<table border='1'>
 		<tr>
@@ -69,5 +72,81 @@
 		<%} rs1.close(); %>
 	</table>
 	<br>
+	<h3>Total $ Amount Purchased per Buyer</h3>
+	<table border='1'>
+		<tr>
+			<td>Buyer Email</td>
+			<td>Total Purchased</td>
+		</tr>
+		<%
+			st1 = con.createStatement();
+			rs1 = st1.executeQuery("SELECT winner, FORMAT(SUM(bidding), 'C') AS 'Total Earnings' FROM auctions WHERE winner IS NOT NULL GROUP BY winner;");
+		%>
+		<% while (rs1.next()){ 
+					%>
+		<tr> 				
+			<td><%= rs1.getString("winner") %></td>		
+			<td><%= rs1.getString("Total Earnings") %></td>
+		</tr>		
+		<%} rs1.close(); %>
+	</table>
+	<br>
+	<h3>Total $ Amount Sold per Seller</h3>
+	<table border='1'>
+		<tr>
+			<td>Seller Email</td>
+			<td>Total Earnings</td>
+		</tr>
+		<%
+			st1 = con.createStatement();
+			rs1 = st1.executeQuery("SELECT owner, FORMAT(SUM(bidding), 'C') AS 'Total Earnings' FROM auctions WHERE winner IS NOT NULL GROUP BY owner;");
+		%>
+		<% while (rs1.next()){ 
+					%>
+		<tr> 				
+			<td><%= rs1.getString("owner") %></td>		
+			<td><%= rs1.getString("Total Earnings") %></td>
+		</tr>		
+		<%} rs1.close(); %>
+	</table>
+	<br>
+	<h3>Top 10 Best-Selling/Highest-Selling Items (by Item Name)</h3>
+	<table border='1'>
+		<tr>
+			<td>Item Name</td>
+			<td>Total Earnings</td>
+		</tr>
+		<%
+			st1 = con.createStatement();
+			rs1 = st1.executeQuery("SELECT i.name, FORMAT(SUM(bidding), 'C') AS 'Total Earnings' FROM auctions a JOIN items i on a.itemID = i.itemID WHERE winner is not null GROUP BY i.name ORDER BY a.bidding DESC LIMIT 10;");
+		%>
+		<% while (rs1.next()){ 
+					%>
+		<tr> 				
+			<td><%= rs1.getString("name") %></td>		
+			<td><%= rs1.getString("Total Earnings") %></td>
+		</tr>		
+		<%} rs1.close(); %>
+	</table>
+	<br>
+	<h3>Top 10 Best Buyers</h3>
+	<table border='1'>
+		<tr>
+			<td>Buyer Email</td>
+			<td>Total Purchases</td>
+		</tr>
+		<%
+			st1 = con.createStatement();
+			rs1 = st1.executeQuery("SELECT winner, FORMAT(SUM(bidding), 'C') AS 'Total Earnings' FROM auctions a WHERE winner IS NOT NULL GROUP BY winner ORDER BY a.bidding DESC LIMIT 10;");
+		%>
+		<% while (rs1.next()){ 
+					%>
+		<tr> 				
+			<td><%= rs1.getString("winner") %></td>		
+			<td><%= rs1.getString("Total Earnings") %></td>
+		</tr>		
+		<%} rs1.close(); %>
+	</table>
+
 </body>
 </html>

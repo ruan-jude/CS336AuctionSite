@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Staff Login</title>
+<title>Admin Dash</title>
 </head>
 <body>
-	<h1>Staff</h1>
+	<h1>Admin Dashboard</h1>
 	<%	
     	out.println("Login Successful. Welcome " + session.getAttribute("user"));
 	%>
+	<br>
 	<a href = "log_out.jsp"> LOGOUT </a>
 	<br> <br>
 	<form method = "get" action = createRep.jsp>
