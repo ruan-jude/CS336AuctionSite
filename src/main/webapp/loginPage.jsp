@@ -14,12 +14,12 @@
 		<form method="get" action=loginTest.jsp>
 			<table>
 				<tr>
-					<td>Username</td>
-					<td><input type="text" name="username"></td>
-				</tr>
-				<tr>
 					<td>Email</td>
 					<td><input type="email" name="email"></td>
+				</tr>
+				<tr>
+					<td>Username</td>
+					<td><input type="text" name="username"></td>
 				</tr>
 			</table>
 			<input type="submit" name="command" value="Log In">

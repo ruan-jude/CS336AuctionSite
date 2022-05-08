@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,11 +12,15 @@
     	out.println("Welcome " + session.getAttribute("user") +"!");
 	%>
 	<br><br>
-	<form method = "get" action = answerQuestion.jsp>
+	<form method="get" action=answerQuestion.jsp>
 		<input type="submit" value="Answer a Question">
-	<br> <br>
 	</form>
-		<form method="get" action=loginPage.jsp>
+	<br>
+	<form method="get" action=editDeletePage.jsp>
+		<input type="submit" value="Edit/Delete Account">
+	</form>
+	<br><br>
+	<form method="get" action=loginPage.jsp>
 		<input type="submit" value="Logout">
 	</form>
 </body>
