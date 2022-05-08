@@ -16,5 +16,9 @@
 	<form method = "get" action = createRep.jsp>
 		<input type="submit" value="Create Customer Rep Account">
 	</form>
+	<br> <br>
+	<form method = "get" action = salesReports.jsp>
+		<input type="submit" value="View Sales Reports">
+	</form>
 </body>
 </html>
