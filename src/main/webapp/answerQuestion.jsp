@@ -24,7 +24,7 @@
 		</form>
 	<br>
 </body>
-<form method = "get" action = "logged_in.jsp">
+<form method = "get" action = "logged_in_rep.jsp">
 	<input type="submit" value="Back">
 </form>
 </html>

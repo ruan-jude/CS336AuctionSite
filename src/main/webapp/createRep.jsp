@@ -10,7 +10,7 @@
 	<br><br>
 	Create Account for Customer Representative
 	<br>
-		<form method="get" action="createAcc.jsp">
+		<form method="get" action="creatingAcc.jsp">
 			<table>
 				<tr>    
 					<td>Username</td><td><input type="text" name="username"></td>
