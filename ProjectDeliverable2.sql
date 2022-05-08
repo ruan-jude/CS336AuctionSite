@@ -121,7 +121,7 @@ CREATE TABLE `bids` (
   `didAlertNorm` boolean DEFAULT false,
   `didAlertAuto` boolean DEFAULT false,
   `didAlertWin` boolean DEFAULT false,
-  PRIMARY KEY (`bidID`), FOREIGN KEY (`bidder`) references `users`(`email`) ON DELETE CASCADE, 
+  PRIMARY KEY (`bidID`), FusersusersOREIGN KEY (`bidder`) references `users`(`email`) ON DELETE CASCADE, 
   FOREIGN KEY (`auctionID`) references `auctions`(`auctionID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
