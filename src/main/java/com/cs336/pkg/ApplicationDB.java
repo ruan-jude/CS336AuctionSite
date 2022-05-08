@@ -34,6 +34,7 @@ public class ApplicationDB {
 		}
 		try {
 			connection = DriverManager.getConnection(connectionUrl, "root", "Dragonoid26!");
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
