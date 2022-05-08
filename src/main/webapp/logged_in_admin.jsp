@@ -9,17 +9,19 @@
 <body>
 	<h1>Admin Dashboard</h1>
 	<%	
-    	out.println("Login Successful. Welcome " + session.getAttribute("user"));
+    	out.println("Welcome " + session.getAttribute("user") +"!");
 	%>
-	<br>
-	<a href = "log_out.jsp"> LOGOUT </a>
 	<br> <br>
 	<form method = "get" action = createRep.jsp>
 		<input type="submit" value="Create Customer Rep Account">
 	</form>
-	<br> <br>
+	<br> 
 	<form method = "get" action = salesReports.jsp>
 		<input type="submit" value="View Sales Reports">
+	</form>
+	<br><br>
+	<form method = "get" action = loginPage.jsp>
+		<input type="submit" value="Logout">
 	</form>
 </body>
 </html>

@@ -7,7 +7,7 @@
 <title>Customer Rep Home</title>
 </head>
 <body>
-	<h1>Customer Rep</h1>
+	<h1>Customer Representative Dashboard</h1>
 	<%	
     	out.println("Welcome " + session.getAttribute("user") +"!");
 	%>

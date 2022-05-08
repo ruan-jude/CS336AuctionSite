@@ -59,7 +59,7 @@
 		<table>
 			<tr>
 				<td>AuctionID</td>
-				<td><input type="test" name="auctionID"></td>
+				<td><input type="text" name="auctionID"></td>
 			</tr>
 		</table>
 		<input type="submit" value="Delete Auction">

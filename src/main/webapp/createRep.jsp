@@ -7,7 +7,7 @@
 <title>Create Customer Rep Account</title>
 </head>
 <body>
-	<h3>Create Account for Customer Representative</h3>
+	<h1>Create Account for Customer Representative</h1>
 	<form method="get" action="creatingRepAcc.jsp">
 		<table>
 			<tr>
