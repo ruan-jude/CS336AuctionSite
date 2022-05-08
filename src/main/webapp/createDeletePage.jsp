@@ -9,7 +9,7 @@
 <title>Create/Delete</title>
 </head>
 <body>
-	<h1>Create/Delete Account</h1>
+	<h3>Create/Delete Account</h3>
 	<form method="post" action="creatingAcc.jsp">
 		<table>
 			<tr>
