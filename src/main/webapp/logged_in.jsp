@@ -9,9 +9,18 @@
 <body>
 	<h1>Online Auction Site</h1>
 	<%	
-    	out.println("Login Successful. Welcome " + session.getAttribute("user"));
+    	out.println("Login Successful. Welcome " + session.getAttribute("user") + "!");
 	%>
-	<a href = "log_out.jsp"> LOGOUT </a>
+	
+	Requested items:
+	<table border='1'>
+		<tr>
+			<td>Item Details</td>
+			<td>Status</td>
+		</tr>
+	</table>
+	
+	<br> <br>
 	
 	<br> <br>
 	<form method = "get" action = createAuction.jsp>
@@ -24,6 +33,14 @@
 	<br>
 	<form method = "get" action = postQuestion.jsp>
 		<input type="submit" value="Post Question">
+	</form>
+	<br>
+	<form method = "get" action = requestItem.jsp>
+		<input type="submit" value="Request Item">
+	</form>
+	<br> <br>
+	<form method = "get" action = index.jsp>
+		<input type="submit" value="Logout">
 	</form>
 </body>
 </html>

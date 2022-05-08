@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
+	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*, java.util.Date"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <title>Created Auction</title>
 </head>
 <body>
-<%
+	<%
 	ApplicationDB db = new ApplicationDB();
 	Connection con = db.getConnection();
 	try {
@@ -101,7 +101,7 @@
 		//Run the query against the DB
 		ps.executeUpdate();
 		
-		out.print(ps);
+		//out.print(ps);
 		
 		out.print("Auction Created!");
 		
@@ -157,8 +157,6 @@
 		    	} catch (Exception e) {
 		    		e.printStackTrace();
 		    	}
-		    	
-		        
 		    };  
 		};  
 		t.schedule(tt, dateClose);  
@@ -169,8 +167,8 @@
 	db.closeConnection(con);
 
 %>
-<form method = "get" action = "createAuction.jsp">
-	<input type="submit" value="Back">
-</form>
+	<form method="get" action="createAuction.jsp">
+		<input type="submit" value="Back">
+	</form>
 </body>
 </html>

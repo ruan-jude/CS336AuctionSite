@@ -137,8 +137,22 @@ CREATE TABLE `customerServ` (
     FOREIGN KEY (`user`) REFERENCES `users`(`email`) ON DELETE CASCADE,
     FOREIGN KEY (`customerRep`) REFERENCES `users`(`email`) ON DELETE CASCADE
     );
-    
-    
 
+--
+-- Table structure for table `customerServ`
+--
+
+DROP TABLE IF EXISTS `itemsReq`;
+CREATE TABLE `itemsReq` (
+	`requestID` BIGINT NOT NULL,
+	`user` VARCHAR(50) NOT NULL,
+	`clothingType` varchar(50) NOT NULL,
+	`size` varchar(10) DEFAULT NULL,
+	`name` varchar(50) DEFAULT NULL,
+	`color` varchar(50) DEFAULT NULL,
+	`season` varchar(20) DEFAULT NULL,
+    PRIMARY KEY (`requestID`),
+    FOREIGN KEY (`user`) REFERENCES `users`(`email`) ON DELETE CASCADE
+);
 
 -- Dump completed on 2022-04-05 21:35:43

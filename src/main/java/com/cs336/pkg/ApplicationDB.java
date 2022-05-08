@@ -6,20 +6,21 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ApplicationDB {
-	
-	public ApplicationDB(){
-		
+
+	public ApplicationDB() {
+
 	}
 
 	@SuppressWarnings("deprecation")
-	public Connection getConnection(){
-		
-		//Create a connection string
-		String connectionUrl = "jdbc:mysql://127.0.0.1:3306/cs336projectdb";
+	public Connection getConnection() {
+
+		// Create a connection string
+		String connectionUrl = "jdbc:mysql://localhost:3306/cs336projectdb?autoReconnect=true&useSSL=false";
 		Connection connection = null;
-		
+
 		try {
-			//Load JDBC driver - the interface standardizing the connection procedure. Look at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
+			// Load JDBC driver - the interface standardizing the connection procedure. Look
+			// at WEB-INF\lib for a mysql connector jar file, otherwise it fails.
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
@@ -32,18 +33,18 @@ public class ApplicationDB {
 			e.printStackTrace();
 		}
 		try {
-			//Create a connection to your DB
-			connection = DriverManager.getConnection(connectionUrl,"root", "spidey2001");
+			// Create a connection to your DB
+			connection = DriverManager.getConnection(connectionUrl, "root", "RJmysql!!22");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return connection;
-		
+
 	}
-	
-	public void closeConnection(Connection connection){
+
+	public void closeConnection(Connection connection) {
 		try {
 			connection.close();
 		} catch (SQLException e) {
@@ -51,19 +52,13 @@ public class ApplicationDB {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
+
 	public static void main(String[] args) {
 		ApplicationDB dao = new ApplicationDB();
 		Connection connection = dao.getConnection();
-		
-		System.out.println(connection);		
+
+		System.out.println(connection);
 		dao.closeConnection(connection);
 	}
-	
-	
 
 }

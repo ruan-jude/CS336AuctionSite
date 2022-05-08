@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>CreateAuction</title>
+<title>RequestItem</title>
 </head>
 <body>
-	<h1>Create an Auction</h1>
-	<form method="post" action=createdAuction.jsp>
+	<h1>Request Item</h1>
+	<form method="post" action=createRequest>
 		<label for="clothing">Choose a clothing type*:</label> <select
 			name="clothing" id="clothing">
 			<option value="Shirt">Shirt</option>
@@ -20,11 +20,11 @@
 		</select>
 		<table>
 			<tr>
-				<td>Name*</td>
+				<td>Name</td>
 				<td><input type="text" name="name"></td>
 			</tr>
 			<tr>
-				<td>Size*</td>
+				<td>Size</td>
 				<td><input type="text" name="size"></td>
 			</tr>
 			<tr>
@@ -38,22 +38,8 @@
 			<option value="Summer">Summer</option>
 			<option value="Fall">Fall</option>
 			<option value="Winter">Winter</option>
-		</select> <br> <br>
-		<table>
-			<tr>
-				<td>Increment*</td>
-				<td><input type="number" name="increment" step="any" min="0"></td>
-			</tr>
-			<tr>
-				<td>Closing Date*</td>
-				<td><input type="datetime-local" name="closingDate"></td>
-			</tr>
-			<tr>
-				<td>Minimum Price</td>
-				<td><input type="number" name="minPrice" step="any" min="0"></td>
-			</tr>
-		</table>
-		<input type="submit" name="command" value="Create">
+		</select> <br> <br> <input type="submit" name="command"
+			value="Request">
 		<%	
 		if(session.getAttribute("invalidinput") != null && session.getAttribute("invalidinput") != ""){
 			out.println(session.getAttribute("invalidinput"));
@@ -64,6 +50,5 @@
 	<form method="get" action="logged_in.jsp">
 		<input type="submit" value="Back">
 	</form>
-
 </body>
 </html>
