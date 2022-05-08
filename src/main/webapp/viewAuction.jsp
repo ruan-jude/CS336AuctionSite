@@ -45,9 +45,13 @@ table td {
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();
 			
-			//Check if we need any alerts:
+			
+			/*
+			 *	CHECK IF WE NEED ALERTS:
+			 */ 
+			//Check if we need alert for autobid:
 			Statement autoBidMaxed = con.createStatement();
-			ResultSet checkAutoBids = autoBidMaxed.executeQuery("SELECT * FROM auctions a, items i, bids b WHERE i.itemID = a.itemID AND b.auctionID = a.auctionID AND b.reachedMax = 1 AND b.didAlert = 0 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
+			ResultSet checkAutoBids = autoBidMaxed.executeQuery("SELECT * FROM auctions a, items i, bids b WHERE i.itemID = a.itemID AND b.auctionID = a.auctionID AND b.reachedMax = 1 AND b.didAlertAuto = 0 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
 			while (checkAutoBids.next()) {
 			%>
 			<div class="alert">
@@ -58,8 +62,59 @@ table td {
 			</div>
 			<% 	
 				Statement st = con.createStatement();
-				st.executeUpdate("UPDATE bids SET bids.didAlert = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
+				st.executeUpdate("UPDATE bids SET bids.didAlertAuto = 1 WHERE bidID = '" + checkAutoBids.getLong("bidID") + "'");
 			}
+			
+			//Check if we need alert for non-autobid:
+			Statement ment = con.createStatement();
+			ResultSet allBids = null;
+			Statement normalAlertBids = con.createStatement();
+			ResultSet resNormAlertBids = normalAlertBids.executeQuery("SELECT * FROM auctions a, items i, bids b WHERE i.itemID = a.itemID AND b.auctionID = a.auctionID AND didAlertNorm = 1 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
+			while (resNormAlertBids.next()) {
+				allBids = ment.executeQuery("SELECT * FROM auctions a, bids b WHERE a.auctionID = b.auctionID AND a.auctionID = '" + resNormAlertBids.getLong("auctionID") + "' ORDER BY amount DESC");
+				if (allBids.next()) {
+					if (!allBids.getString("bidder").equals(resNormAlertBids.getString("bidder"))) {
+						%>
+							<div class="alert">
+								<span class="closebtn"
+									onclick="this.parentElement.style.display='none';">&times;</span>
+								Someone has placed a bid greater than yours on item, <strong><%=resNormAlertBids.getString("name")%></strong>.
+							</div>
+						<% 	
+						Statement st = con.createStatement();
+						st.executeUpdate("UPDATE bids SET bids.didAlertNorm = 0 WHERE bidID = '" + resNormAlertBids.getLong("bidID") + "'");
+					}
+				}
+			}
+			
+			//Check if we need alert for winners:
+			Statement y = con.createStatement();
+			ResultSet wins = y.executeQuery("SELECT * FROM items i, auctions a, bids b WHERE i.itemID = a.itemID AND a.auctionID = b.auctionID AND a.winner IS NOT NULL AND b.didAlertWin = 0 AND b.bidder = '" + session.getAttribute("email").toString() + "'");
+			while (wins.next()) {
+				if (wins.getString("winner").equals(session.getAttribute("email").toString())) {
+					if (session.getAttribute("email").toString().equals(wins.getString("bidder"))) {
+						%>
+						<div class="alert">
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							Congratulations! You won the item, <strong><%= wins.getString("name")%></strong>! 
+						</div>
+						<% 	
+					} else {
+						%>
+						<div class="alert">
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							Your auction ended with no winners since your minimum was not reached or no one bet.
+							For item, <strong><%= wins.getString("name")%></strong>.
+						</div>
+						<% 	
+					}
+					Statement st = con.createStatement();
+					st.executeUpdate("UPDATE bids SET bids.didAlertWin = 1 WHERE bidID = '" + wins.getLong("bidID") + "'");
+				}
+			}
+			
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
