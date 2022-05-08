@@ -114,7 +114,7 @@
 		    	ApplicationDB db = new ApplicationDB();
 		    	Connection con = db.getConnection();
 		    	try {
-		    		Boolean noBids = true;
+		    		boolean noBids = true;
 		    		Date now = new Date();
 		    		java.text.SimpleDateFormat sdf = 
 		   			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
