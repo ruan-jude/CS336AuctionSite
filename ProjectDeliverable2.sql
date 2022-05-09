@@ -40,11 +40,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('Ethan','ethan@gmail.com', false, false),
-	('admin', 'admin@gmail.com', true, false),
-    ('sne', 'sne@gmail.com', false, false),
-    ('devin', 'devin@gmail.com', false, false),
-    ('ruan', 'ruan@gmail.com', false, false);
+INSERT INTO `users` VALUES
+	('admin', 'admin@gmail.com', true, false);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
