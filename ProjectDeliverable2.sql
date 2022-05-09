@@ -95,7 +95,7 @@ CREATE TABLE `auctions` (
   `winner` varchar(50) DEFAULT NULL,
   `owner` varchar(50) NOT NULL,
   `ownWin` boolean DEFAULT false,
-  PRIMARY KEY (`auctionID`), FOREIGN KEY (`winner`) references `users`(`email`),
+  PRIMARY KEY (`auctionID`), FOREIGN KEY (`winner`) references `users`(`email`) ON DELETE CASCADE,
   FOREIGN KEY (`owner`) references `users`(`email`) ON DELETE CASCADE, 
   FOREIGN KEY (`itemID`) references `items`(`itemID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
